@@ -8,8 +8,8 @@ const SurveyBlock = () => {
     <>
       <div className="border p-5 rounded-xl">
         <div className="text-xl">tytuł</div>
-        <div className="h-32 overflow-scroll">
-          <p className="break-words">
+        <div className="h-32 overflow-y-scroll customScrollbar">
+          <p className="break-words pr-2">
             opissssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
             sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
             ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
