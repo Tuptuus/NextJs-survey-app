@@ -13,8 +13,8 @@ const Logout = () => {
 
   return (
     <div>
-      <p onClick={logout} className="cursor-pointer text-3xl pl-5">
-        <RiLogoutBoxLine />
+      <p className="text-3xl pl-5">
+        <RiLogoutBoxLine onClick={logout} className="cursor-pointer" />
       </p>
     </div>
   );
