@@ -27,6 +27,13 @@ body {
   transition: 0.3s ease-in-out;
 }
 
+.nameGradient {
+  color: #f97316;
+  background: linear-gradient(270deg, #f97316 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .loadAnimation {
   animation: loadModal 0.3s;
 }
