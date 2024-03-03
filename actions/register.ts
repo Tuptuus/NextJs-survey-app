@@ -1,11 +1,11 @@
 "use server";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 
 export const register = async (data: any) => {
   const { name, email, pass } = data;
-  const hashedPass = await bcrypt.hash(pass, 10);
+  const hashedPass = await bcryptjs.hash(pass, 10);
 
   const exisitingUser = await getUserByEmail(email);
 

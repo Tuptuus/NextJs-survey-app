@@ -1,21 +1,20 @@
-"use client";
 import React from "react";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { useRouter } from "next/navigation";
+import { signOut } from "@/auth";
 
 const Logout = () => {
-  const router = useRouter();
-
-  const logout = () => {
-    console.log("logout");
-    router.push("/");
-  };
-
   return (
     <div>
-      <p className="text-3xl pl-5">
-        <RiLogoutBoxLine onClick={logout} className="cursor-pointer" />
-      </p>
+      <form
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
+      >
+        <button type="submit" className="text-3xl pl-5">
+          <RiLogoutBoxLine className="cursor-pointer" />
+        </button>
+      </form>
     </div>
   );
 };
