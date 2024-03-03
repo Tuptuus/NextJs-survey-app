@@ -2,15 +2,17 @@ import React from "react";
 import CreateSurveyButton from "../components/CreateSurveyButton";
 import SurveyBlock from "../components/SurveyBlock";
 import ModalContextProvider from "../contexts/modalContext";
+import { auth } from "@/auth";
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+  const session = await auth();
   return (
     <>
       <ModalContextProvider>
         <div className="max-w-[1500px] ms-auto me-auto text-white px-2">
           <div className="flex py-7">
             <div className="text-2xl w-1/2  flex items-center">
-              Twoje ankiety
+              {JSON.stringify(session)}
             </div>
             <div className="w-1/2 flex justify-end ">
               <CreateSurveyButton />
