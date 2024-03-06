@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { register } from "@/actions/register";
 import { FaGithub } from "react-icons/fa";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -25,10 +28,20 @@ const RegisterPage = () => {
     setEmail("");
     setPass("");
   };
+
+  const loginGithub = (provider: any) => {
+    signIn(provider, {
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
+    });
+  };
+
   return (
     <div className="flex justify-center flex-col items-center h-screen text-white">
       <div className=" bg-orange-500 w-96 h-10 flex items-center justify-center rounded-lg cursor-pointer hover:bg-orange-600 transition-all">
-        <span className="flex items-center text-xl">
+        <span
+          onClick={() => loginGithub("github")}
+          className="flex items-center text-xl"
+        >
           Register with <FaGithub className="ml-2 text-2xl" />
         </span>
       </div>
@@ -61,6 +74,12 @@ const RegisterPage = () => {
         >
           Register
         </button>
+        <p className="flex justify-end">
+          You have account?{" "}
+          <Link className="text-orange-500 pl-1 pr-2" href={"/auth/login"}>
+            Login here
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -2,9 +2,14 @@ import type { NextAuthConfig } from "next-auth";
 import bcryptjs from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
 import { getUserByEmail } from "./data/user";
+import Github from "next-auth/providers/github";
 
 export default {
   providers: [
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }),
     Credentials({
       async authorize(credentials) {
         const data = credentials;

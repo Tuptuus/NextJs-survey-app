@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { login } from "@/actions/login";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export let LoginData: any = "";
 
@@ -13,42 +16,63 @@ const LoginPage = () => {
     password: "",
   });
 
-  const submitLogin = () => {
+  const submitLogin = (e: any) => {
+    e.preventDefault();
     login(data);
     setTimeout(() => {
       router.push("/dashboard");
     }, 1000);
   };
 
+  const loginGithub = (provider: any) => {
+    signIn(provider, {
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
+    });
+  };
+
   return (
     <div className="flex justify-center flex-col items-center h-screen text-white">
       <div className=" bg-orange-500 w-96 h-10 flex items-center justify-center rounded-lg cursor-pointer hover:bg-orange-600 transition-all">
-        <span className="flex items-center text-xl">
-          Register with <FaGithub className="ml-2 text-2xl" />
+        <span
+          onClick={() => loginGithub("github")}
+          className="flex items-center text-xl"
+        >
+          Login with <FaGithub className="ml-2 text-2xl" />
         </span>
       </div>
       <p className="mt-2">OR</p>
       <div className="flex flex-col">
-        <input
-          value={data.email}
-          onChange={(e) => setData({ ...data, email: e.target.value })}
-          type="text"
-          placeholder="email"
-          className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96 "
-        />
-        <input
-          value={data.password}
-          onChange={(e) => setData({ ...data, password: e.target.value })}
-          type="text"
-          placeholder="password"
-          className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96 "
-        />
-        <button
-          onClick={submitLogin}
-          className="bg-orange-500 m-2  h-10 text-xl rounded-lg"
-        >
-          LOGIN
-        </button>
+        <form action="" onSubmit={submitLogin} className="flex flex-col">
+          <input
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
+            type="email"
+            placeholder="email"
+            className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96 "
+            required
+          />
+          <input
+            value={data.password}
+            onChange={(e) => setData({ ...data, password: e.target.value })}
+            type="password"
+            placeholder="password"
+            className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96"
+            required
+          />
+          <button
+            // onClick={submitLogin}
+            type="submit"
+            className="bg-orange-500 m-2  h-10 text-xl rounded-lg"
+          >
+            LOGIN
+          </button>
+          <p className="flex flex-row items-end justify-end">
+            You don&apos;t have account?{" "}
+            <Link className="text-orange-500 pl-1 pr-2" href={"/auth/register"}>
+              Register here
+            </Link>
+          </p>
+        </form>
       </div>
     </div>
   );
