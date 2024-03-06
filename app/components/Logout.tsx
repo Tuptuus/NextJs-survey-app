@@ -11,7 +11,7 @@ const Logout = () => {
           await signOut();
         }}
       >
-        <button type="submit" className="text-3xl pl-5">
+        <button type="submit" className="text-3xl pl-5 flex items-center">
           <RiLogoutBoxLine className="cursor-pointer" />
         </button>
       </form>
