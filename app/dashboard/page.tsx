@@ -1,5 +1,5 @@
 import React from "react";
-import CreateSurveyButton from "../components/CreateSurveyButton";
+import OpenModalButton from "../components/OpenModalButton";
 import SurveyBlock from "../components/SurveyBlock";
 import ModalContextProvider from "../contexts/modalContext";
 
@@ -13,7 +13,7 @@ const DashboardPage = async () => {
               Twoje ankiety
             </div>
             <div className="w-1/2 flex justify-end ">
-              <CreateSurveyButton />
+              <OpenModalButton />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
