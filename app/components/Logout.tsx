@@ -1,20 +1,19 @@
+"use client";
 import React from "react";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { signOut } from "@/auth";
+import { signOut } from "next-auth/react";
 
 const Logout = () => {
   return (
     <div>
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
+      <button
+        onClick={() => {
+          signOut();
         }}
+        className="text-3xl pl-5 flex items-center"
       >
-        <button type="submit" className="text-3xl pl-5 flex items-center">
-          <RiLogoutBoxLine className="cursor-pointer" />
-        </button>
-      </form>
+        <RiLogoutBoxLine className="cursor-pointer" />
+      </button>
     </div>
   );
 };

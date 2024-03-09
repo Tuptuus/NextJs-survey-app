@@ -4,11 +4,10 @@ import { LuPlus } from "react-icons/lu";
 import { useModalContext } from "../contexts/modalContext";
 import CreateSurveyModal from "./CreateSurveyModal";
 
-const CreateSurveyButton = () => {
+const OpenModalButton = () => {
   const { showModal, setShowModal } = useModalContext();
   const openCreateSurveyModal = () => {
     setShowModal(true);
-    console.log(showModal);
   };
   return (
     <>
@@ -28,4 +27,4 @@ const CreateSurveyButton = () => {
   );
 };
 
-export default CreateSurveyButton;
+export default OpenModalButton;

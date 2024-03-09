@@ -1,8 +1,12 @@
+"use client";
 import React, { useRef } from "react";
 import { MdClose } from "react-icons/md";
 import { useModalContext } from "../contexts/modalContext";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/currentUser";
 
 const CreateSurveyModal = () => {
+  const user = useCurrentUser();
   const { setShowModal } = useModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -51,7 +55,10 @@ const CreateSurveyModal = () => {
             className="bg-transparent border border-white rounded-md p-4 mt-6"
           />
         </div>
-        <button className="bg-orange-500 hover:bg-orange-600 transition-all w-full mt-6 rounded-lg text-xl h-10">
+        <button
+          onClick={() => console.log(user)}
+          className="bg-orange-500 hover:bg-orange-600 transition-all w-full mt-6 rounded-lg text-xl h-10"
+        >
           Utwórz ankietę
         </button>
       </div>
