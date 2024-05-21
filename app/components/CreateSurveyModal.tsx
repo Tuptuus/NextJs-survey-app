@@ -1,11 +1,16 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useModalContext } from "../contexts/modalContext";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/currentUser";
+import { createSurvey } from "@/actions/createSurvey";
 
 const CreateSurveyModal = () => {
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+  });
   const user = useCurrentUser();
   const { setShowModal } = useModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -46,17 +51,24 @@ const CreateSurveyModal = () => {
         <div className="flex flex-col">
           <input
             type="text"
+            value={data.title}
+            onChange={(e) => setData({ ...data, title: e.target.value })}
             placeholder="Tytuł ankiety"
             className="bg-transparent border border-white rounded-md p-4 mt-6"
           />
           <input
             type="text"
+            value={data.description}
+            onChange={(e) => setData({ ...data, description: e.target.value })}
             placeholder="Opis ankiety"
             className="bg-transparent border border-white rounded-md p-4 mt-6"
           />
         </div>
         <button
-          onClick={() => console.log(user)}
+          onClick={() => createSurvey({ ...data, surveyToUserID: user?.id })}
+          // onClick={() => {
+          //   console.log(user);
+          // }}
           className="bg-orange-500 hover:bg-orange-600 transition-all w-full mt-6 rounded-lg text-xl h-10"
         >
           Utwórz ankietę
