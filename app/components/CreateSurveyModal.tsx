@@ -30,6 +30,15 @@ const CreateSurveyModal = () => {
     e.stopPropagation();
   };
 
+  const createSurveyFunction = () => {
+    const currDate = new Date().toLocaleDateString();
+    createSurvey({
+      ...data,
+      surveyToUserID: user?.id,
+      createdAt: currDate,
+    });
+  };
+
   return (
     <div
       onClick={closeSurveyModal}
@@ -65,10 +74,7 @@ const CreateSurveyModal = () => {
           />
         </div>
         <button
-          onClick={() => createSurvey({ ...data, surveyToUserID: user?.id })}
-          // onClick={() => {
-          //   console.log(user);
-          // }}
+          onClick={() => createSurveyFunction()}
           className="bg-orange-500 hover:bg-orange-600 transition-all w-full mt-6 rounded-lg text-xl h-10"
         >
           Utwórz ankietę
