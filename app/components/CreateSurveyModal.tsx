@@ -11,6 +11,7 @@ const CreateSurveyModal = () => {
     title: "",
     description: "",
   });
+  const [error, setError] = useState("");
   const user = useCurrentUser();
   const { setShowModal } = useModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -32,11 +33,19 @@ const CreateSurveyModal = () => {
 
   const createSurveyFunction = () => {
     const currDate = new Date().toLocaleDateString();
-    createSurvey({
-      ...data,
-      surveyToUserID: user?.id,
-      createdAt: currDate,
-    });
+    if (data.title == "" || data.description == "") {
+      setError("Wpisz tytuł oraz opis ankiety");
+      setTimeout(() => {
+        setError("");
+      }, 2500);
+    } else {
+      createSurvey({
+        ...data,
+        surveyToUserID: user?.id,
+        createdAt: currDate,
+      });
+      closeSurveyModal();
+    }
   };
 
   return (
@@ -73,9 +82,12 @@ const CreateSurveyModal = () => {
             className="bg-transparent border border-white rounded-md p-4 mt-6"
           />
         </div>
+        <div className="flex items-center justify-center mt-3">
+          <span className="text-red-500 ">{error}</span>
+        </div>
         <button
           onClick={() => createSurveyFunction()}
-          className="bg-orange-500 hover:bg-orange-600 transition-all w-full mt-6 rounded-lg text-xl h-10"
+          className="bg-orange-500 hover:bg-orange-600 transition-all w-full mt-3 rounded-lg text-xl h-10"
         >
           Utwórz ankietę
         </button>

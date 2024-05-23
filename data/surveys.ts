@@ -10,3 +10,13 @@ export const getSurveysByUserID = async (id: string) => {
     return null;
   }
 };
+
+export const getSurveyByID = async (id: string) => {
+  try {
+    const survey = await db.survey.findUnique({ where: { id: id } });
+    return survey;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

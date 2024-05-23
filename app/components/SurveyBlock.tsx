@@ -2,12 +2,14 @@
 import React from "react";
 import { MdOutlineFileOpen } from "react-icons/md";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 interface SurveyBlockProps {
   key: string | null;
   title: string | null;
   desc: string | null;
   date: string | null;
+  id: string | null;
 }
 
 const SurveyBlock: React.FC<SurveyBlockProps> = ({
@@ -15,7 +17,9 @@ const SurveyBlock: React.FC<SurveyBlockProps> = ({
   title,
   desc,
   date,
+  id,
 }) => {
+  const router = useRouter();
   return (
     <>
       <div key={key} className="border p-5 rounded-xl">
@@ -31,7 +35,12 @@ const SurveyBlock: React.FC<SurveyBlockProps> = ({
             {date}
           </div>
           <div className="w-1/2 flex justify-end">
-            <span className="cursor-pointer hover:text-orange-400 transition-all flex items-center">
+            <span
+              onClick={() => {
+                router.push(`/dashboard/survey/${id}`);
+              }}
+              className="cursor-pointer hover:text-orange-400 transition-all flex items-center"
+            >
               <span className="text-2xl">
                 <MdOutlineFileOpen />
               </span>

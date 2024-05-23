@@ -1,10 +1,9 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import OpenModalButton from "../components/OpenModalButton";
 import SurveyBlock from "../components/SurveyBlock";
 import ModalContextProvider from "../contexts/modalContext";
 import { getSurveysByUserID } from "@/data/surveys";
-import { useCurrentUser } from "@/hooks/currentUser";
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
 
 interface Survey {
@@ -15,30 +14,20 @@ interface Survey {
   createdAt: string | null;
 }
 
-const DashboardPage = () => {
-  const user = useCurrentUser();
-  const [surveysToDisplay, setSurveysToDisplay] = useState<Survey[]>([]);
-  useEffect(() => {
-    console.log("e");
-    const fetchData = async () => {
-      if (user?.id) {
-        const data = await getSurveysByUserID(user.id);
-        if (data) {
-          setSurveysToDisplay(data);
-        }
-      }
-    };
-    fetchData();
-  }, [user?.id]);
+const getData = async () => {
+  const session = await auth();
+  const data = await getSurveysByUserID(session?.user?.id as string);
+  return data;
+};
+
+const DashboardPage = async () => {
+  const data = await getData();
   return (
     <>
       <ModalContextProvider>
-        <div className="max-w-[1500px] ms-auto me-auto text-white px-2">
+        <div className="text-white">
           <div className="flex py-7">
-            <div
-              onClick={() => console.log(surveysToDisplay)}
-              className="text-2xl w-1/2  flex items-center"
-            >
+            <div className="text-2xl w-1/2  flex items-center">
               Twoje ankiety
             </div>
             <div className="w-1/2 flex justify-end ">
@@ -46,12 +35,13 @@ const DashboardPage = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {surveysToDisplay.map((item) => (
+            {data?.map((item) => (
               <SurveyBlock
                 key={item.id}
                 title={item.title}
                 desc={item.description}
                 date={item.createdAt}
+                id={item.id}
               />
             ))}
           </div>
