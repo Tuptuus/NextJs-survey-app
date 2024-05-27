@@ -61,7 +61,7 @@ function SurveyPage() {
             </div>
           </div>
         </div>
-        <div className="bg-red-500 w-4/5">
+        <div className="w-4/5">
           {currMode == "questions" ? <SurveyQuestions /> : <SurveyAnswers />}
         </div>
       </div>
