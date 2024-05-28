@@ -1,9 +1,12 @@
 "use server";
 import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 
 export const getSurveysByUserID = async (id: string) => {
   try {
-    const surveys = await db.survey.findMany({ where: { surveyToUserID: id } });
+    const surveys = await db.survey.findMany({
+      where: { surveyToUserID: id },
+    });
     return surveys;
   } catch (err) {
     console.log(err);
@@ -13,10 +16,22 @@ export const getSurveysByUserID = async (id: string) => {
 
 export const getSurveyByID = async (id: string) => {
   try {
-    const survey = await db.survey.findUnique({ where: { id: id } });
+    const survey = await db.survey.findUnique({
+      where: { id: id },
+      include: { questions: true },
+    });
     return survey;
   } catch (err) {
     console.log(err);
     return null;
   }
+};
+
+export const deleteSurveyByID = async (id: string) => {
+  try {
+    await db.survey.delete({ where: { id: id } });
+  } catch (err) {
+    console.log(err);
+  }
+  redirect("/dashboard");
 };

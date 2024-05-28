@@ -2,7 +2,11 @@ import React from "react";
 import { Switch, cn } from "@nextui-org/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-function QuestionBlock() {
+interface test {
+  questionTitle: string | null;
+}
+
+const QuestionBlock: React.FC<test> = (props) => {
   return (
     <>
       <div className="px-6 py-8 border rounded-xl my-8">
@@ -12,7 +16,7 @@ function QuestionBlock() {
           </label>
           <input
             type="text"
-            value={"Nowe pytanie"}
+            value={props.questionTitle !== null ? props.questionTitle : ""}
             className="bg-transparent px-4 pt-7 pb-3 text-lg outline-none border-none"
           />
         </div>
@@ -50,6 +54,6 @@ function QuestionBlock() {
       </div>
     </>
   );
-}
+};
 
 export default QuestionBlock;

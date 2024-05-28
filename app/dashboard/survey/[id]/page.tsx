@@ -1,5 +1,4 @@
 "use client";
-import SideBar from "@/app/components/SideBar";
 import SurveyAnswers from "@/app/components/SurveyAnswers";
 import SurveyQuestions from "@/app/components/SurveyQuestions";
 import { getSurveyByID } from "@/data/surveys";
@@ -7,12 +6,20 @@ import { useCurrentUser } from "@/hooks/currentUser";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+interface Question {
+  id: string | null;
+  surveyId: string | null;
+  text: string | null;
+  type: string | null;
+}
+
 interface Survey {
   id: string | null;
   surveyToUserID: string | null;
   title: string | null;
   description: string | null;
   createdAt: string | null;
+  questions: Question[];
 }
 
 function SurveyPage() {
@@ -36,7 +43,10 @@ function SurveyPage() {
   return (
     <div className="text-white flex flex-col">
       <div>
-        <div className="text-2xl w-1/2  flex items-center py-7">
+        <div
+          onClick={() => console.log(currSurvey)}
+          className="text-2xl w-1/2  flex items-center py-7"
+        >
           Ankieta: {currSurvey ? currSurvey.title : null}
         </div>
       </div>
@@ -62,7 +72,11 @@ function SurveyPage() {
           </div>
         </div>
         <div className="w-4/5">
-          {currMode == "questions" ? <SurveyQuestions /> : <SurveyAnswers />}
+          {currMode == "questions" ? (
+            currSurvey && <SurveyQuestions {...currSurvey} />
+          ) : (
+            <SurveyAnswers />
+          )}
         </div>
       </div>
     </div>
