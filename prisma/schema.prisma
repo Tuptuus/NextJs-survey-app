@@ -8,11 +8,26 @@ datasource db {
 }
 
 model Survey {
-  id             String @id @default(cuid()) @map("_id")
+  id             String     @id @default(cuid()) @map("_id")
   surveyToUserID String
   title          String
   description    String
   createdAt      String
+  questions      Question[]
+}
+
+model Question {
+  id       String @id @default(cuid()) @map("_id")
+  surveyId String
+  survey   Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  text     String
+  type     Type   @default(SHORTTEXT)
+}
+
+enum Type {
+  SHORTTEXT
+  LONGTEXT
+  MULTICHOICE
 }
 
 model User {
