@@ -1,5 +1,6 @@
 "use server";
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const getSurveysByUserID = async (id: string) => {
@@ -35,3 +36,33 @@ export const deleteSurveyByID = async (id: string) => {
   }
   redirect("/dashboard");
 };
+
+// export const addQuestionToSurvey = async (id: string) => {
+//   try {
+//     await db.survey.update({
+//       where: { id: id },
+//       data: {
+//         questions: { create: [{ text: "Nowe pytanie" }] },
+//       },
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   revalidatePath("/");
+// };
+
+// export const deleteQuestionFromSurvey = async (id: string) => {
+//   try {
+//     await db.question.delete({ where: { id: id } });
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   revalidatePath("/");
+// };
+
+// const saveQuestionsChanges = async () => {
+//   try {
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };

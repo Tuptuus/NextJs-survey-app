@@ -1,6 +1,6 @@
 "use client";
-import SurveyAnswers from "@/app/components/SurveyAnswers";
-import SurveyQuestions from "@/app/components/SurveyQuestions";
+import SurveyAnswers from "@/app/components/SurveyAnswersPanel/SurveyAnswers";
+import SurveyQuestions from "@/app/components/SurveyQuestionsPanel/SurveyQuestions";
 import { getSurveyByID } from "@/data/surveys";
 import { useCurrentUser } from "@/hooks/currentUser";
 import { useParams } from "next/navigation";

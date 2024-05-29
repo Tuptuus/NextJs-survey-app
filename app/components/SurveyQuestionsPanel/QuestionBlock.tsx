@@ -1,12 +1,20 @@
+"use client";
 import React from "react";
 import { Switch, cn } from "@nextui-org/react";
 import { FaRegTrashAlt } from "react-icons/fa";
+// import { deleteQuestionFromSurvey } from "@/data/surveys";
 
-interface test {
+interface question {
+  id: string | null;
   questionTitle: string | null;
+  test: () => void;
 }
 
-const QuestionBlock: React.FC<test> = (props) => {
+const QuestionBlock: React.FC<question> = (props) => {
+  const { questionTitle, id, test } = props;
+  const deleteQuestion = (id: string) => {
+    test();
+  };
   return (
     <>
       <div className="px-6 py-8 border rounded-xl my-8">
@@ -16,7 +24,7 @@ const QuestionBlock: React.FC<test> = (props) => {
           </label>
           <input
             type="text"
-            value={props.questionTitle !== null ? props.questionTitle : ""}
+            value={questionTitle !== null ? questionTitle : ""}
             className="bg-transparent px-4 pt-7 pb-3 text-lg outline-none border-none"
           />
         </div>
@@ -38,7 +46,10 @@ const QuestionBlock: React.FC<test> = (props) => {
             </div>
           </div>
           <div className="w-1/3 flex justify-end items-center text-lg">
-            <div className="mx-5 cursor-pointer p-3 rounded-xl hover:bg-orange-500 transition-all">
+            <div
+              onClick={() => deleteQuestion(id as string)}
+              className="mx-5 cursor-pointer p-3 rounded-xl hover:bg-orange-500 transition-all"
+            >
               <FaRegTrashAlt className="text-2xl" />
             </div>
             <div className="">
