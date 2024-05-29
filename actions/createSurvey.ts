@@ -11,11 +11,7 @@ export const createSurvey = async (data: any) => {
       description,
       createdAt,
       questions: {
-        create: [
-          { text: "przykład #1" },
-          { text: "przykład #2" },
-          { text: "przykład #3" },
-        ],
+        create: [{ text: "przykład #1" }],
       },
     },
     include: { questions: true },

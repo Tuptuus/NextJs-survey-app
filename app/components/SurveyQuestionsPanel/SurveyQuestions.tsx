@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import QuestionBlock from "./QuestionBlock";
 import SurveyActions from "./SurveyActions";
 
@@ -19,13 +20,22 @@ interface Survey {
 }
 
 const SurveyQuestions: React.FC<Survey> = (item) => {
-  console.log(item);
+  const [allQuestions, setAllQuestions] = useState(item.questions);
+  const test = () => {
+    console.log(allQuestions);
+  };
+  const addNewQuestion = () => {};
   return (
     <div>
       <SurveyActions actionsOnID={item.id as string} />
       <div className="flex flex-col">
-        {item.questions.map((question) => (
-          <QuestionBlock key={question.id} questionTitle={question.text} />
+        {allQuestions.map((question) => (
+          <QuestionBlock
+            key={question.id}
+            questionTitle={question.text}
+            id={question.id}
+            test={test}
+          />
         ))}
       </div>
     </div>
