@@ -60,9 +60,18 @@ export const deleteSurveyByID = async (id: string) => {
 //   revalidatePath("/");
 // };
 
-// const saveQuestionsChanges = async () => {
-//   try {
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+export const saveQuestionsChanges = async (
+  questions: any,
+  deletedQuestions: any
+) => {
+  try {
+    const deleteAll = questions.concat(deletedQuestions);
+    const idsToDelete = deleteAll.map((item: any) => item.id);
+    console.log(deletedQuestions);
+    await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
+    await db.question.createMany({ data: questions });
+  } catch (err) {
+    console.log(err);
+  }
+  revalidatePath("/");
+};

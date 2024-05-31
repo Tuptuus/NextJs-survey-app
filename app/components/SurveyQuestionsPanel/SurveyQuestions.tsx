@@ -1,7 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuestionBlock from "./QuestionBlock";
 import SurveyActions from "./SurveyActions";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuestions } from "@/redux/features/questionsSlice";
+import { useAppSelector } from "@/redux/store";
 
 interface Question {
   id: string | null;
@@ -20,21 +23,20 @@ interface Survey {
 }
 
 const SurveyQuestions: React.FC<Survey> = (item) => {
-  const [allQuestions, setAllQuestions] = useState(item.questions);
-  const test = () => {
-    console.log(allQuestions);
-  };
-  const addNewQuestion = () => {};
+  const questions = useAppSelector((state) => state.questionsReducer.questions);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setQuestions(item.questions));
+  }, [dispatch, item.questions]);
   return (
     <div>
       <SurveyActions actionsOnID={item.id as string} />
       <div className="flex flex-col">
-        {allQuestions.map((question) => (
+        {questions.map((question: any) => (
           <QuestionBlock
             key={question.id}
             questionTitle={question.text}
             id={question.id}
-            test={test}
           />
         ))}
       </div>
