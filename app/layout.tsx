@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { auth } from "@/auth";
-import { NextUIProvider } from "@nextui-org/react";
+import { ReduxProvider } from "@/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +21,9 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html className="bg-gray-950" lang="pl">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <ReduxProvider>{children}</ReduxProvider>
+        </body>
       </html>
     </SessionProvider>
   );
