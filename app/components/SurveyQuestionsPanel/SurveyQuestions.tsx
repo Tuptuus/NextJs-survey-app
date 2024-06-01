@@ -9,8 +9,9 @@ import { useAppSelector } from "@/redux/store";
 interface Question {
   id: string | null;
   surveyId: string | null;
-  text: string | null;
+  title: string | null;
   type: string | null;
+  isRequired: boolean;
 }
 
 interface Survey {
@@ -35,8 +36,11 @@ const SurveyQuestions: React.FC<Survey> = (item) => {
         {questions.map((question: any) => (
           <QuestionBlock
             key={question.id}
-            questionTitle={question.text}
+            questionTitle={question.title}
             id={question.id}
+            isRequired={question.isRequired}
+            surveyId={question.surveyId}
+            type={question.type}
           />
         ))}
       </div>

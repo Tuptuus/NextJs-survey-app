@@ -4,7 +4,6 @@ import SurveyBlock from "../components/SurveyBlock";
 import ModalContextProvider from "../contexts/modalContext";
 import { getSurveysByUserID } from "@/data/surveys";
 import { auth } from "@/auth";
-import { db } from "@/lib/db";
 
 interface Survey {
   id: string;
