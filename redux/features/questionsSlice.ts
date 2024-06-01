@@ -11,6 +11,10 @@ export const questions = createSlice({
   name: "questionsSlice",
   initialState,
   reducers: {
+    clearStates: (state) => {
+      state.questions = [];
+      state.questionsToDelete = [];
+    },
     setQuestions: (state, action) => {
       state.questions = action.payload;
     },
@@ -30,8 +34,37 @@ export const questions = createSlice({
       state.questionsToDelete = questionsToDelete;
       state.questions = newQuestions;
     },
+    updateQuestionTitle: (state, action) => {
+      // console.log(action.payload);
+      const updatedQuestions = state.questions.map((question: any) => {
+        if (question.id === action.payload.id) {
+          return { ...question, title: action.payload.title };
+        } else {
+          return question;
+        }
+      });
+      state.questions = updatedQuestions;
+    },
+    updateQuestionRequired: (state, action) => {
+      console.log(action.payload);
+      const updatedQuestions = state.questions.map((question: any) => {
+        if (question.id === action.payload.id) {
+          return { ...question, isRequired: action.payload.isRequired };
+        } else {
+          return question;
+        }
+      });
+      state.questions = updatedQuestions;
+    },
   },
 });
 
-export const { setQuestions, addQuestions, deleteQuestion } = questions.actions;
+export const {
+  setQuestions,
+  addQuestions,
+  deleteQuestion,
+  updateQuestionTitle,
+  clearStates,
+  updateQuestionRequired,
+} = questions.actions;
 export default questions.reducer;

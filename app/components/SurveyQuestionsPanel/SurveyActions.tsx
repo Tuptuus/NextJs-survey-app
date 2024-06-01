@@ -28,7 +28,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
     const shortID = short.generate();
     const question = {
       id: shortID,
-      text: "test",
+      title: "test",
       isRequired: false,
       surveyId: actionsOnID,
       type: "SHORTTEXT",

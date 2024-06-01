@@ -18,7 +18,7 @@ model Survey {
 
 model Question {
   id         String  @id @default(cuid()) @map("_id")
-  text       String
+  title      String
   isRequired Boolean
   surveyId   String
   survey     Survey  @relation(fields: [surveyId], references: [id], onDelete: Cascade)

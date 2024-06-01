@@ -3,14 +3,17 @@ import SurveyAnswers from "@/app/components/SurveyAnswersPanel/SurveyAnswers";
 import SurveyQuestions from "@/app/components/SurveyQuestionsPanel/SurveyQuestions";
 import { getSurveyByID } from "@/data/surveys";
 import { useCurrentUser } from "@/hooks/currentUser";
+import { clearStates } from "@/redux/features/questionsSlice";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface Question {
   id: string | null;
   surveyId: string | null;
-  text: string | null;
+  title: string | null;
   type: string | null;
+  isRequired: boolean;
 }
 
 interface Survey {
@@ -26,11 +29,16 @@ function SurveyPage() {
   const [currMode, setCurrMode] = useState("questions");
   const [currSurvey, setCurrSurvey] = useState<Survey | null>(null);
   const params = useParams();
+  const dispatch = useDispatch();
 
   const changeDisplayPage = (btn: string) => {
     setCurrMode(btn);
     console.log(currSurvey);
   };
+
+  useEffect(() => {
+    dispatch(clearStates());
+  }, [dispatch]);
 
   useEffect(() => {
     const getSurvey = async () => {
