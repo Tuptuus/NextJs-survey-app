@@ -19,7 +19,7 @@ export const getSurveyByID = async (id: string) => {
   try {
     const survey = await db.survey.findUnique({
       where: { id: id },
-      include: { questions: true },
+      include: { questions: { include: { options: true } } },
     });
     return survey;
   } catch (err) {

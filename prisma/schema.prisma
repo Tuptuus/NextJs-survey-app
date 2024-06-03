@@ -17,18 +17,27 @@ model Survey {
 }
 
 model Question {
-  id         String  @id @default(cuid()) @map("_id")
+  id         String   @id @default(cuid()) @map("_id")
   title      String
   isRequired Boolean
   surveyId   String
-  survey     Survey  @relation(fields: [surveyId], references: [id], onDelete: Cascade)
-  type       Type    @default(SHORTTEXT)
+  survey     Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  type       Type     @default(SHORTTEXT)
+  options    Option[]
 }
 
 enum Type {
   SHORTTEXT
   LONGTEXT
   MULTICHOICE
+  SINGLECHOICE
+}
+
+model Option {
+  id         String   @id @default(cuid()) @map("_id")
+  text       String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
 }
 
 model User {

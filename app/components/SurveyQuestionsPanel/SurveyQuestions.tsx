@@ -6,12 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuestions } from "@/redux/features/questionsSlice";
 import { useAppSelector } from "@/redux/store";
 
+interface Option {
+  id: string | null;
+  text: string | null;
+}
+
 interface Question {
   id: string | null;
   surveyId: string | null;
   title: string | null;
   type: string | null;
   isRequired: boolean;
+  options: Option[];
 }
 
 interface Survey {
@@ -41,6 +47,7 @@ const SurveyQuestions: React.FC<Survey> = (item) => {
             isRequired={question.isRequired}
             surveyId={question.surveyId}
             type={question.type}
+            options={question.options}
           />
         ))}
       </div>
