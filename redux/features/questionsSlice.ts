@@ -56,6 +56,17 @@ export const questions = createSlice({
       });
       state.questions = updatedQuestions;
     },
+    changeQuestionType: (state, action) => {
+      console.log(action.payload);
+      const updatedQuestions = state.questions.map((question: any) => {
+        if (question.id === action.payload.id) {
+          return { ...question, type: action.payload.type };
+        } else {
+          return question;
+        }
+      });
+      state.questions = updatedQuestions;
+    },
   },
 });
 
@@ -66,5 +77,6 @@ export const {
   updateQuestionTitle,
   clearStates,
   updateQuestionRequired,
+  changeQuestionType,
 } = questions.actions;
 export default questions.reducer;

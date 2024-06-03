@@ -11,10 +11,35 @@ export const createSurvey = async (data: any) => {
       description,
       createdAt,
       questions: {
-        create: [{ title: "przykład #1", isRequired: false }],
+        create: [
+          {
+            title: "przykład #1",
+            isRequired: false,
+            type: "SHORTTEXT",
+          },
+          {
+            title: "przykład #2",
+            isRequired: false,
+            type: "SINGLECHOICE",
+            options: { create: [{ text: "Opcja 1" }, { text: "Opcja 2" }] },
+          },
+          {
+            title: "przykład #2",
+            isRequired: false,
+            type: "MULTICHOICE",
+            options: { create: [{ text: "Opcja A" }, { text: "Opcja B" }] },
+          },
+        ],
       },
     },
-    include: { questions: true },
+    // include: {
+    //   questions: {
+    //     include: {
+    //       options: true,
+    //     },
+    //   },
+    // },
+    // include: { questions: true },
   });
   console.log(survey);
   revalidatePath("/");
