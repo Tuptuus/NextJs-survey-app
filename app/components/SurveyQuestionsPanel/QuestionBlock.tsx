@@ -10,6 +10,7 @@ import {
   updateQuestionTitle,
 } from "@/redux/features/questionsSlice";
 import { useAppSelector } from "@/redux/store";
+import QuestionOptions from "./QuestionOptions";
 
 interface option {
   id: string | null;
@@ -27,7 +28,7 @@ interface question {
 
 const QuestionBlock: React.FC<question> = (props) => {
   const dispatch = useDispatch();
-  const { questionTitle, id, isRequired, type } = props;
+  const { questionTitle, id, isRequired, type, options } = props;
   const [questionTitleValue, setQuestionTitleValue] = useState(questionTitle);
   const [switchIsRequired, setSwitchIsRequired] = useState(isRequired);
   const [changeQuestionTypeOpen, setChangeQuestionTypeOpen] = useState(false);
@@ -72,18 +73,22 @@ const QuestionBlock: React.FC<question> = (props) => {
             className="bg-transparent px-4 pt-7 pb-3 text-lg outline-none border-none"
           />
         </div>
-        <div className="mt-8 border-b border-dashed">
+        <div className="mt-8">
           {currQuestionType === "SHORTTEXT" ? (
-            <p className="text-lg">Pole krótkiej odpowiedzi</p>
+            <p className="text-lg border-b border-dashed">
+              Pole krótkiej odpowiedzi
+            </p>
           ) : null}
           {currQuestionType === "LONGTEXT" ? (
-            <p className="text-lg">Pole długiej odpowiedzi</p>
-          ) : null}
-          {currQuestionType === "MULTICHOICE" ? (
-            <p className="text-lg">Pole wielokrotnego wyboru</p>
+            <p className="text-lg border-b border-dashed">
+              Pole długiej odpowiedzi
+            </p>
           ) : null}
           {currQuestionType === "SINGLECHOICE" ? (
-            <p className="text-lg">Pole jednokrotnego wyboru</p>
+            <QuestionOptions options={options} type={type} />
+          ) : null}
+          {currQuestionType === "MULTICHOICE" ? (
+            <QuestionOptions options={options} type={type} />
           ) : null}
         </div>
         <div className="flex mt-8">
