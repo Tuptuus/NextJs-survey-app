@@ -62,16 +62,26 @@ export const deleteSurveyByID = async (id: string) => {
 
 export const saveQuestionsChanges = async (
   questions: any,
-  deletedQuestions: any
+  deletedQuestions: any,
+  options: any
 ) => {
   try {
     const deleteAll = questions.concat(deletedQuestions);
+    let allOptions: any = [];
+    questions.forEach((obj: any) => {
+      if (obj.options) {
+        const options = obj.options;
+        delete obj.options;
+        allOptions.push(...options);
+      }
+    });
     const idsToDelete = deleteAll.map((item: any) => item.id);
     console.log(deletedQuestions);
     await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
     await db.question.createMany({ data: questions });
+    await db.option.createMany({ data: options });
   } catch (err) {
     console.log(err);
   }
-  revalidatePath("/");
+  // revalidatePath("/");
 };

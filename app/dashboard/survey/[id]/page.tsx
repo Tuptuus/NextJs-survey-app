@@ -8,12 +8,19 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
+interface option {
+  id: string | null;
+  text: string | null;
+  questionId: string | null;
+}
+
 interface Question {
   id: string | null;
   surveyId: string | null;
   title: string | null;
   type: string | null;
   isRequired: boolean;
+  options: option[];
 }
 
 interface Survey {

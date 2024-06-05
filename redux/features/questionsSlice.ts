@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 let initialQuestions: any = [];
 let initialQuestionsToDelete: any = [];
+let initialQuestionOptions: any = [];
 const initialState = {
   questions: initialQuestions,
   questionsToDelete: initialQuestionsToDelete,
+  questionOptions: initialQuestionOptions,
 };
 
 export const questions = createSlice({
@@ -67,6 +69,17 @@ export const questions = createSlice({
       });
       state.questions = updatedQuestions;
     },
+    setQuestionOptions: (state, action) => {
+      state.questionOptions = action.payload;
+    },
+    updateQuestionOptionText: (state, action) => {
+      const updatedQuestionOptions = state.questionOptions.map((item: any) =>
+        item.id === action.payload.id
+          ? { ...item, text: action.payload.text }
+          : item
+      );
+      state.questionOptions = updatedQuestionOptions;
+    },
   },
 });
 
@@ -78,5 +91,7 @@ export const {
   clearStates,
   updateQuestionRequired,
   changeQuestionType,
+  setQuestionOptions,
+  updateQuestionOptionText,
 } = questions.actions;
 export default questions.reducer;

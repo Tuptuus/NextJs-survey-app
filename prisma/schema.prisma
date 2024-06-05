@@ -34,10 +34,10 @@ enum Type {
 }
 
 model Option {
-  id         String   @id @default(cuid()) @map("_id")
-  text       String
-  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId String
+  id         String    @id @default(cuid()) @map("_id")
+  text       String?
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String?
 }
 
 model User {
