@@ -2,7 +2,7 @@
 import { useAppSelector } from "@/redux/store";
 import short from "short-uuid";
 // import { addQuestionToSurvey, deleteSurveyByID } from "@/data/surveys";
-import React from "react";
+import React, { useState } from "react";
 import {
   FaPlus,
   FaRegCheckCircle,
@@ -20,6 +20,9 @@ interface surveyID {
 
 const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
   const questions = useAppSelector((state) => state.questionsReducer.questions);
+  const options = useAppSelector(
+    (state) => state.questionsReducer.questionOptions
+  );
   const deletedQuestions = useAppSelector(
     (state) => state.questionsReducer.questionsToDelete
   );
@@ -32,6 +35,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
       isRequired: false,
       surveyId: actionsOnID,
       type: "SHORTTEXT",
+      options: [],
     };
     dispatch(addQuestions(question));
   };
@@ -60,7 +64,9 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
           </span>
         </div>
         <div
-          onClick={() => saveQuestionsChanges(questions, deletedQuestions)}
+          onClick={() =>
+            saveQuestionsChanges(questions, deletedQuestions, options)
+          }
           className="ml-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">

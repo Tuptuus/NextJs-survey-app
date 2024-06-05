@@ -11,6 +11,7 @@ import {
 } from "@/redux/features/questionsSlice";
 import { useAppSelector } from "@/redux/store";
 import QuestionOptions from "./QuestionOptions";
+import short from "short-uuid";
 
 interface option {
   id: string | null;
@@ -40,6 +41,11 @@ const QuestionBlock: React.FC<question> = (props) => {
     setQuestionTitleValue(e.target.value);
     dispatch(updateQuestionTitle({ id, title: e.target.value }));
   };
+
+  const optionsExample = [
+    { id: short.generate(), text: "Opcja 1", questionId: id },
+    { id: short.generate(), text: "Opcja 2", questionId: id },
+  ];
 
   const handleQuestionType = (passType: string) => {
     setCurrQuestionType(passType);
@@ -75,7 +81,10 @@ const QuestionBlock: React.FC<question> = (props) => {
         </div>
         <div className="mt-8">
           {currQuestionType === "SHORTTEXT" ? (
-            <p className="text-lg border-b border-dashed">
+            <p
+              onClick={() => console.log(options)}
+              className="text-lg border-b border-dashed"
+            >
               Pole krótkiej odpowiedzi
             </p>
           ) : null}
@@ -85,10 +94,16 @@ const QuestionBlock: React.FC<question> = (props) => {
             </p>
           ) : null}
           {currQuestionType === "SINGLECHOICE" ? (
-            <QuestionOptions options={options} type={type} />
+            <QuestionOptions
+              options={options.length != 0 ? options : optionsExample}
+              type={type}
+            />
           ) : null}
           {currQuestionType === "MULTICHOICE" ? (
-            <QuestionOptions options={options} type={type} />
+            <QuestionOptions
+              options={options.length != 0 ? options : optionsExample}
+              type={type}
+            />
           ) : null}
         </div>
         <div className="flex mt-8">
@@ -144,8 +159,8 @@ const QuestionBlock: React.FC<question> = (props) => {
           </div>
           <div className="w-1/3 flex justify-end items-center text-lg">
             <div
-              // onClick={() => dispatch(deleteQuestion(id))}
-              onClick={() => console.log(props)}
+              onClick={() => dispatch(deleteQuestion(id))}
+              // onClick={() => console.log(props)}
               className="mx-5 cursor-pointer p-3 rounded-xl hover:bg-orange-500 transition-all"
             >
               <FaRegTrashAlt className="text-2xl" />
