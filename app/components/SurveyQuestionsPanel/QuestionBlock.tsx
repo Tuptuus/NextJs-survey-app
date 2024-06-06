@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   changeQuestionType,
   deleteQuestion,
+  setQuestionOptions,
   updateQuestionRequired,
   updateQuestionTitle,
 } from "@/redux/features/questionsSlice";
