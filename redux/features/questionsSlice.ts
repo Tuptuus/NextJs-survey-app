@@ -16,8 +16,10 @@ export const questions = createSlice({
     clearStates: (state) => {
       state.questions = [];
       state.questionsToDelete = [];
+      state.questionOptions = [];
     },
     setQuestions: (state, action) => {
+      // console.log(action.payload);
       state.questions = action.payload;
     },
     addQuestions: (state, action) => {
@@ -48,7 +50,7 @@ export const questions = createSlice({
       state.questions = updatedQuestions;
     },
     updateQuestionRequired: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       const updatedQuestions = state.questions.map((question: any) => {
         if (question.id === action.payload.id) {
           return { ...question, isRequired: action.payload.isRequired };
@@ -59,7 +61,7 @@ export const questions = createSlice({
       state.questions = updatedQuestions;
     },
     changeQuestionType: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       const updatedQuestions = state.questions.map((question: any) => {
         if (question.id === action.payload.id) {
           return { ...question, type: action.payload.type };
@@ -70,7 +72,8 @@ export const questions = createSlice({
       state.questions = updatedQuestions;
     },
     setQuestionOptions: (state, action) => {
-      state.questionOptions = action.payload;
+      state.questionOptions = state.questionOptions.concat(action.payload);
+      // console.log(action.payload);
     },
     updateQuestionOptionText: (state, action) => {
       const updatedQuestionOptions = state.questionOptions.map((item: any) =>

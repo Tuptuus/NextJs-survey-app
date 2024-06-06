@@ -1,5 +1,6 @@
 "use server";
 import { db } from "@/lib/db";
+import { create } from "domain";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -66,22 +67,27 @@ export const saveQuestionsChanges = async (
   options: any
 ) => {
   try {
+    console.log(questions);
     const deleteAll = questions.concat(deletedQuestions);
     let allOptions: any = [];
     questions.forEach((obj: any) => {
       if (obj.options) {
-        const options = obj.options;
+        const questionOptions = obj.options;
         delete obj.options;
-        allOptions.push(...options);
+        questionOptions.forEach((opt: any) => {
+          allOptions.push({ ...opt, questionId: obj.id });
+        });
       }
     });
-    const idsToDelete = deleteAll.map((item: any) => item.id);
-    console.log(deletedQuestions);
-    await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
-    await db.question.createMany({ data: questions });
-    await db.option.createMany({ data: options });
+    // const idsToDelete = deleteAll.map((item: any) => item.id);
+    // console.log(deletedQuestions);
+    // await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
+    // await db.question.createMany({ data: questions });
+    // allOptions = allOptions.map((opt: any) => ({ ...opt, id: undefined }));
+    console.log(options);
+    // await db.option.createMany({ data: allOptions });
   } catch (err) {
     console.log(err);
   }
-  // revalidatePath("/");
+  revalidatePath("/");
 };
