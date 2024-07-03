@@ -43,16 +43,15 @@ const QuestionBlock: React.FC<question> = (props) => {
     dispatch(updateQuestionTitle({ id, title: e.target.value }));
   };
 
-  const optionsExample = [
-    { id: short.generate(), text: "Opcja 1", questionId: id },
-    { id: short.generate(), text: "Opcja 2", questionId: id },
-  ];
-
   const handleQuestionType = (passType: string) => {
     setCurrQuestionType(passType);
     dispatch(changeQuestionType({ id, type: passType }));
     setChangeQuestionTypeOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(setQuestionOptions(options));
+  }, []);
 
   // const handleSwitchUpdate = () => {
   //   dispatch(updateQuestionRequired({ id, isRequired: switchIsRequired }));
@@ -95,16 +94,10 @@ const QuestionBlock: React.FC<question> = (props) => {
             </p>
           ) : null}
           {currQuestionType === "SINGLECHOICE" ? (
-            <QuestionOptions
-              options={options.length != 0 ? options : optionsExample}
-              type={type}
-            />
+            <QuestionOptions options={options} type={type} />
           ) : null}
           {currQuestionType === "MULTICHOICE" ? (
-            <QuestionOptions
-              options={options.length != 0 ? options : optionsExample}
-              type={type}
-            />
+            <QuestionOptions options={options} type={type} />
           ) : null}
         </div>
         <div className="flex mt-8">

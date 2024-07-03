@@ -73,7 +73,6 @@ export const questions = createSlice({
     },
     setQuestionOptions: (state, action) => {
       state.questionOptions = state.questionOptions.concat(action.payload);
-      // console.log(action.payload);
     },
     updateQuestionOptionText: (state, action) => {
       const updatedQuestionOptions = state.questionOptions.map((item: any) =>

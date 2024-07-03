@@ -26,10 +26,6 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
   );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setQuestionOptions(options));
-  }, [dispatch, options]);
-
   const handleOptionsInput = (id: string, text: string) => {
     const updatedOptions = optionsState.map((option) =>
       option.id === id ? { ...option, text } : option
@@ -37,6 +33,7 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
     setOptionsState(updatedOptions);
     dispatch(updateQuestionOptionText({ id, text }));
   };
+  console.log(test);
 
   if (type === "SINGLECHOICE") {
     return (
@@ -52,12 +49,12 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
             <div key={item.id} className="flex items-center mt-2">
               <div className="bg-gray-800 border-gray-500 border-2 w-5 h-5 rounded-full"></div>
               <input
-                // onChange={(e) => handleOptionsInput(item.id, e.target.value)}
                 type="text"
                 required
                 minLength={1}
                 className="bg-transparent outline-none ml-2 border-b-2 border-transparent focus:border-orange-500 p-1 w-40"
                 value={item.text}
+                onChange={(e) => handleOptionsInput(item.id, e.target.value)}
               />
             </div>
           ))}
@@ -71,7 +68,7 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
           Pole wielokrotnego wyboru
         </p>
         <div className="mt-5">
-          {options.map((item: any) => (
+          {optionsState.map((item: any) => (
             <div key={item.id} className="flex items-center mt-2">
               <div className="bg-gray-800 border-gray-500 border-2 w-5 h-5 rounded-md"></div>
               <input
@@ -80,6 +77,7 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
                 minLength={1}
                 className="bg-transparent outline-none ml-2 border-b-2 border-transparent focus:border-orange-500 p-1 w-40"
                 value={item.text}
+                onChange={(e) => handleOptionsInput(item.id, e.target.value)}
               />
             </div>
           ))}
