@@ -16,6 +16,7 @@ export const createSurvey = async (data: any) => {
             title: "przykład #1",
             isRequired: false,
             type: "SHORTTEXT",
+            options: { create: [{ text: "Opcja 1" }, { text: "Opcja 2" }] },
           },
           {
             title: "przykład #2",

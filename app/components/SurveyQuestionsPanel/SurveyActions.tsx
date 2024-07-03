@@ -35,7 +35,10 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
       isRequired: false,
       surveyId: actionsOnID,
       type: "SHORTTEXT",
-      options: [],
+      options: [
+        { id: short.generate(), text: "Opcja 1", questionId: shortID },
+        { id: short.generate(), text: "Opcja 2", questionId: shortID },
+      ],
     };
     dispatch(addQuestions(question));
   };
