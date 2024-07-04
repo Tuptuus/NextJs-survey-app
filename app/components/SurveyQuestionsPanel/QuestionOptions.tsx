@@ -58,6 +58,9 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
               />
             </div>
           ))}
+          <span className="cursor-pointer text-orange-400 hover:underline">
+            Dodaj opcję
+          </span>
         </div>
       </>
     );
