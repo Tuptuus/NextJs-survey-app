@@ -72,7 +72,14 @@ export const questions = createSlice({
       state.questions = updatedQuestions;
     },
     setQuestionOptions: (state, action) => {
-      state.questionOptions = state.questionOptions.concat(action.payload);
+      const newOptions = action.payload;
+      const existingOptionsIds = state.questionOptions.map(
+        (option: any) => option.id
+      );
+      const filteredOptions = newOptions.filter(
+        (option: any) => !existingOptionsIds.includes(option.id)
+      );
+      state.questionOptions = state.questionOptions.concat(filteredOptions);
     },
     updateQuestionOptionText: (state, action) => {
       const updatedQuestionOptions = state.questionOptions.map((item: any) =>

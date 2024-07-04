@@ -51,6 +51,7 @@ const QuestionBlock: React.FC<question> = (props) => {
 
   useEffect(() => {
     dispatch(setQuestionOptions(options));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // const handleSwitchUpdate = () => {

@@ -75,6 +75,8 @@ export const saveQuestionsChanges = async (
       delete obj.options;
     });
     const idsToDelete = deleteAll.map((item: any) => item.id);
+    console.log(questions);
+    console.log(options);
     await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
     await db.question.createMany({ data: questions });
     await db.option.createMany({ data: options });
