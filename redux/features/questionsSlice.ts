@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 let initialQuestions: any = [];
 let initialQuestionsToDelete: any = [];
 let initialQuestionOptions: any = [];
+let initialOptionsToDelete: any = [];
 const initialState = {
   questions: initialQuestions,
   questionsToDelete: initialQuestionsToDelete,
   questionOptions: initialQuestionOptions,
+  optionsToDelete: initialOptionsToDelete,
 };
 
 export const questions = createSlice({
@@ -17,6 +19,7 @@ export const questions = createSlice({
       state.questions = [];
       state.questionsToDelete = [];
       state.questionOptions = [];
+      state.optionsToDelete = [];
     },
     setQuestions: (state, action) => {
       // console.log(action.payload);
@@ -89,6 +92,22 @@ export const questions = createSlice({
       );
       state.questionOptions = updatedQuestionOptions;
     },
+    deleteOptionAction: (state, action) => {
+      const optionsToDelete: any = state.optionsToDelete;
+      const currOptions = state.questionOptions;
+      const newOptions = currOptions.filter((item: any) => {
+        const toDelete = item.id !== action.payload;
+        if (!toDelete) {
+          optionsToDelete.push(item);
+        }
+        return toDelete;
+      });
+      state.optionsToDelete = optionsToDelete;
+      state.questionOptions = newOptions;
+    },
+    addOptionAction: (state, action) => {
+      state.questionOptions = state.questionOptions.concat(action.payload);
+    },
   },
 });
 
@@ -102,5 +121,7 @@ export const {
   changeQuestionType,
   setQuestionOptions,
   updateQuestionOptionText,
+  deleteOptionAction,
+  addOptionAction,
 } = questions.actions;
 export default questions.reducer;

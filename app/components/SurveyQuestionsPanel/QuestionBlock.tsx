@@ -51,6 +51,7 @@ const QuestionBlock: React.FC<question> = (props) => {
 
   useEffect(() => {
     dispatch(setQuestionOptions(options));
+    console.log(options);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -95,10 +96,10 @@ const QuestionBlock: React.FC<question> = (props) => {
             </p>
           ) : null}
           {currQuestionType === "SINGLECHOICE" ? (
-            <QuestionOptions options={options} type={type} />
+            <QuestionOptions questionID={id} options={options} type={type} />
           ) : null}
           {currQuestionType === "MULTICHOICE" ? (
-            <QuestionOptions options={options} type={type} />
+            <QuestionOptions questionID={id} options={options} type={type} />
           ) : null}
         </div>
         <div className="flex mt-8">
