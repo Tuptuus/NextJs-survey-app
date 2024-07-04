@@ -2,11 +2,14 @@
 import {
   setQuestionOptions,
   updateQuestionOptionText,
+  deleteOptionAction,
+  addOptionAction,
 } from "@/redux/features/questionsSlice";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { useAppSelector } from "@/redux/store";
-import { Checkbox, CheckboxGroup, Radio, RadioGroup } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import short from "short-uuid";
 
 interface option {
   id: string | null;
@@ -16,10 +19,11 @@ interface option {
 interface optionProps {
   options: option[];
   type: string | null;
+  questionID: string | null;
 }
 
 const QuestionOptions: React.FC<optionProps> = (props) => {
-  const { options, type } = props;
+  const { options, type, questionID } = props;
   const [optionsState, setOptionsState] = useState(options);
   const test = useAppSelector(
     (state) => state.questionsReducer.questionOptions
@@ -33,15 +37,30 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
     setOptionsState(updatedOptions);
     dispatch(updateQuestionOptionText({ id, text }));
   };
-  console.log(test);
+
+  const deleteOption = (item: any) => {
+    const newOptions = optionsState.filter((option) => option.id != item.id);
+    setOptionsState(newOptions);
+    dispatch(deleteOptionAction(item.id));
+  };
+
+  const createNewOption = () => {
+    const newOption = {
+      id: short.generate(),
+      text: "Nowa opcja",
+      questionId: questionID,
+    };
+    let currOptions = optionsState;
+    let newOptions = currOptions.concat(newOption);
+    setOptionsState(newOptions);
+    dispatch(addOptionAction(newOption));
+    // console.log(optionsState);
+  };
 
   if (type === "SINGLECHOICE") {
     return (
       <>
-        <p
-          onClick={() => console.log(test)}
-          className="text-lg border-b border-dashed"
-        >
+        <p className="text-lg border-b border-dashed">
           Pole jednokrotnego wyboru
         </p>
         <div className="mt-5">
@@ -56,9 +75,20 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
                 value={item.text}
                 onChange={(e) => handleOptionsInput(item.id, e.target.value)}
               />
+              {optionsState.length > 1 ? (
+                <div
+                  onClick={() => deleteOption(item)}
+                  className="mx-2 cursor-pointer p-2 rounded-lg hover:bg-orange-500 transition-all"
+                >
+                  <FaRegTrashAlt />
+                </div>
+              ) : null}
             </div>
           ))}
-          <span className="cursor-pointer text-orange-400 hover:underline">
+          <span
+            onClick={() => createNewOption()}
+            className="cursor-pointer text-orange-400 hover:underline"
+          >
             Dodaj opcję
           </span>
         </div>
@@ -82,8 +112,22 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
                 value={item.text}
                 onChange={(e) => handleOptionsInput(item.id, e.target.value)}
               />
+              {optionsState.length > 1 ? (
+                <div
+                  onClick={() => deleteOption(item)}
+                  className="mx-2 cursor-pointer p-2 rounded-lg hover:bg-orange-500 transition-all"
+                >
+                  <FaRegTrashAlt />
+                </div>
+              ) : null}
             </div>
           ))}
+          <span
+            onClick={() => createNewOption()}
+            className="cursor-pointer text-orange-400 hover:underline"
+          >
+            Dodaj opcję
+          </span>
         </div>
       </>
     );
