@@ -13,6 +13,8 @@ import { MdShare } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { addQuestions } from "@/redux/features/questionsSlice";
 import { deleteSurveyByID, saveQuestionsChanges } from "@/data/surveys";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface surveyID {
   actionsOnID: string | null;
@@ -27,6 +29,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
     (state) => state.questionsReducer.questionsToDelete
   );
   const dispatch = useDispatch();
+  const router = useRouter();
   const test = () => {
     const shortID = short.generate();
     const question = {
@@ -54,9 +57,14 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
           </span>
         </div>
         <div className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer">
-          <span className="flex items-center">
-            <FaRegEye /> Zobacz
-          </span>
+          <Link href={`/survey/${actionsOnID}`} target="_blank">
+            <span
+              // onClick={() => router.push(`/survey/${actionsOnID}`)}
+              className="flex items-center"
+            >
+              <FaRegEye /> Zobacz
+            </span>
+          </Link>
         </div>
         <div
           onClick={() => console.log(questions)}

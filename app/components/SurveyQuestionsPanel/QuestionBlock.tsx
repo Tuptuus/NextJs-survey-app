@@ -83,10 +83,7 @@ const QuestionBlock: React.FC<question> = (props) => {
         </div>
         <div className="mt-8">
           {currQuestionType === "SHORTTEXT" ? (
-            <p
-              onClick={() => console.log(options)}
-              className="text-lg border-b border-dashed"
-            >
+            <p className="text-lg border-b border-dashed">
               Pole krótkiej odpowiedzi
             </p>
           ) : null}
@@ -95,12 +92,12 @@ const QuestionBlock: React.FC<question> = (props) => {
               Pole długiej odpowiedzi
             </p>
           ) : null}
-          {currQuestionType === "SINGLECHOICE" ? (
+          {currQuestionType === "SINGLECHOICE" || "MULTICHOICE" ? (
             <QuestionOptions questionID={id} options={options} type={type} />
           ) : null}
-          {currQuestionType === "MULTICHOICE" ? (
+          {/* {currQuestionType === "MULTICHOICE" ? (
             <QuestionOptions questionID={id} options={options} type={type} />
-          ) : null}
+          ) : null} */}
         </div>
         <div className="flex mt-8">
           <div className="w-2/3 flex relative">
