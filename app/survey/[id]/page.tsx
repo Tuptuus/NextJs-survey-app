@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getSurveyByID } from "@/data/surveys";
 import {
+  Button,
   Checkbox,
   CheckboxGroup,
   divider,
@@ -111,6 +112,11 @@ function SurveyAnswerPage() {
         </div>
         <div className=" mt-5">
           <div>{questions}</div>
+        </div>
+        <div className="my-8 flex flex-col items-start">
+          <Button className="bg-orange-500 text-white" size="lg">
+            ZAPISZ ODPOWIEDZI
+          </Button>
         </div>
       </div>
     </div>
