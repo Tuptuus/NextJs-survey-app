@@ -67,21 +67,18 @@ export const saveQuestionsChanges = async (
   options: any
 ) => {
   try {
-    // console.log(questions);
-    // console.log(deletedQuestions);
-    // console.log(options);
     const deleteAll = questions.concat(deletedQuestions);
     questions.forEach((obj: any) => {
       delete obj.options;
     });
     const idsToDelete = deleteAll.map((item: any) => item.id);
-    // console.log(questions);
-    // console.log(options);
     await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
     await db.question.createMany({ data: questions });
     await db.option.createMany({ data: options });
+    return "✅ Zapisano zmiany";
   } catch (err) {
     console.log(err);
+    return "Wystąpił nieznany błąd";
   }
   revalidatePath("/");
 };

@@ -34,6 +34,32 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+@keyframes slideDown {
+  0% {
+    transform: translateY(-150%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-150%);
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.5s forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.5s forwards;
+}
+
 .loadAnimation {
   animation: loadModal 0.3s;
 }

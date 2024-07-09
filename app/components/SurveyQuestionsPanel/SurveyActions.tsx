@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { addQuestions } from "@/redux/features/questionsSlice";
+import { addQuestions, setActionAlert } from "@/redux/features/questionsSlice";
 import { deleteSurveyByID, saveQuestionsChanges } from "@/data/surveys";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -30,7 +30,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
   );
   const dispatch = useDispatch();
   const router = useRouter();
-  const test = () => {
+  const addQuestionFunction = () => {
     const shortID = short.generate();
     const question = {
       id: shortID,
@@ -45,11 +45,23 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
     };
     dispatch(addQuestions(question));
   };
+
+  const saveChanges = async () => {
+    const msg = await saveQuestionsChanges(
+      questions,
+      deletedQuestions,
+      options
+    );
+    dispatch(setActionAlert(msg));
+    setTimeout(() => {
+      dispatch(setActionAlert(""));
+    }, 4000);
+  };
   return (
     <>
       <div className="flex justify-end">
         <div
-          onClick={() => test()}
+          onClick={() => addQuestionFunction()}
           className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">
@@ -70,14 +82,23 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
           onClick={() => console.log(questions)}
           className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
-          <span className="flex items-center">
+          <span
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${window.location.origin}/survey/${actionsOnID}`
+              );
+              dispatch(setActionAlert("ℹ️ Skopiowano do schowka"));
+              setTimeout(() => {
+                dispatch(setActionAlert(""));
+              }, 4000);
+            }}
+            className="flex items-center"
+          >
             <MdShare /> Udostępnij
           </span>
         </div>
         <div
-          onClick={() =>
-            saveQuestionsChanges(questions, deletedQuestions, options)
-          }
+          onClick={() => saveChanges()}
           className="ml-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">
