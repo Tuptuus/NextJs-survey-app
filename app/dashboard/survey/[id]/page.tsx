@@ -4,6 +4,7 @@ import SurveyQuestions from "@/app/components/SurveyQuestionsPanel/SurveyQuestio
 import { getSurveyByID } from "@/data/surveys";
 import { useCurrentUser } from "@/hooks/currentUser";
 import { clearStates } from "@/redux/features/questionsSlice";
+import { useAppSelector } from "@/redux/store";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -35,6 +36,11 @@ interface Survey {
 function SurveyPage() {
   const [currMode, setCurrMode] = useState("questions");
   const [currSurvey, setCurrSurvey] = useState<Survey | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const actionAlert = useAppSelector(
+    (state) => state.questionsReducer.actionAlert
+  );
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -42,6 +48,22 @@ function SurveyPage() {
     setCurrMode(btn);
     console.log(currSurvey);
   };
+
+  useEffect(() => {
+    if (actionAlert !== "") {
+      setIsVisible(true);
+      setIsAnimating(true);
+      const timer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else if (isVisible) {
+      setIsAnimating(false);
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 500);
+    }
+  }, [actionAlert, isVisible]);
 
   useEffect(() => {
     dispatch(clearStates());
@@ -57,6 +79,16 @@ function SurveyPage() {
 
   return (
     <div className="text-white flex flex-col">
+      {isVisible ? (
+        <div
+          className={`absolute w-80 h-14 bg-gray-800 rounded-xl self-center flex items-center justify-center top-5 ${
+            isAnimating ? "slide-down" : "slide-up"
+          }`}
+        >
+          <span className="pl-2">{actionAlert}</span>
+        </div>
+      ) : null}
+
       <div>
         <div
           onClick={() => console.log(currSurvey)}

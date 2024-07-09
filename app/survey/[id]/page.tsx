@@ -51,11 +51,11 @@ function SurveyAnswerPage() {
       <p className="text-lg">{item.title}</p>
 
       {item.type === "SHORTTEXT" ? (
-        <Input className="dark" type="text" label="Krótka odpowiedź" />
+        <Input className="dark mt-2" type="text" label="Krótka odpowiedź" />
       ) : null}
 
       {item.type === "LONGTEXT" ? (
-        <Input className="dark" type="text" label="Długa odpowiedź" />
+        <Input className="dark mt-2" type="text" label="Długa odpowiedź" />
       ) : null}
 
       <RadioGroup color="warning">

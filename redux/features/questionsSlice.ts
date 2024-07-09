@@ -4,11 +4,13 @@ let initialQuestions: any = [];
 let initialQuestionsToDelete: any = [];
 let initialQuestionOptions: any = [];
 let initialOptionsToDelete: any = [];
+let initialActionAlert = "test";
 const initialState = {
   questions: initialQuestions,
   questionsToDelete: initialQuestionsToDelete,
   questionOptions: initialQuestionOptions,
   optionsToDelete: initialOptionsToDelete,
+  actionAlert: initialActionAlert,
 };
 
 export const questions = createSlice({
@@ -108,6 +110,9 @@ export const questions = createSlice({
     addOptionAction: (state, action) => {
       state.questionOptions = state.questionOptions.concat(action.payload);
     },
+    setActionAlert: (state, action) => {
+      state.actionAlert = action.payload;
+    },
   },
 });
 
@@ -123,5 +128,6 @@ export const {
   updateQuestionOptionText,
   deleteOptionAction,
   addOptionAction,
+  setActionAlert,
 } = questions.actions;
 export default questions.reducer;
