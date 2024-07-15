@@ -2,7 +2,7 @@
 import { useAppSelector } from "@/redux/store";
 import short from "short-uuid";
 // import { addQuestionToSurvey, deleteSurveyByID } from "@/data/surveys";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaPlus,
   FaRegCheckCircle,
@@ -15,12 +15,15 @@ import { addQuestions, setActionAlert } from "@/redux/features/questionsSlice";
 import { deleteSurveyByID, saveQuestionsChanges } from "@/data/surveys";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDeleteModalContext } from "@/app/contexts/deleteSurveyModalContext";
+import DeleteSurveyModal from "../DeleteSurveyModal";
 
 interface surveyID {
   actionsOnID: string | null;
 }
 
 const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
+  const { showModal, setShowModal } = useDeleteModalContext();
   const questions = useAppSelector((state) => state.questionsReducer.questions);
   const options = useAppSelector(
     (state) => state.questionsReducer.questionOptions
@@ -59,6 +62,9 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
   };
   return (
     <>
+      {showModal ? (
+        <DeleteSurveyModal actionsOnID={actionsOnID as string} />
+      ) : null}
       <div className="flex justify-end">
         <div
           onClick={() => addQuestionFunction()}
@@ -106,7 +112,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
           </span>
         </div>
         <div
-          onClick={() => deleteSurveyByID(actionsOnID as string)}
+          onClick={() => setShowModal(true)}
           className="ml-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">

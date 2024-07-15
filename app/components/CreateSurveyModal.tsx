@@ -1,8 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
-import { useModalContext } from "../contexts/modalContext";
-import { useSession } from "next-auth/react";
+import { useCreateModalContext } from "../contexts/createSurveyModalContext";
 import { useCurrentUser } from "@/hooks/currentUser";
 import { createSurvey } from "@/actions/createSurvey";
 
@@ -13,7 +12,7 @@ const CreateSurveyModal = () => {
   });
   const [error, setError] = useState("");
   const user = useCurrentUser();
-  const { setShowModal } = useModalContext();
+  const { setShowModal } = useCreateModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const closeSurveyModal = () => {

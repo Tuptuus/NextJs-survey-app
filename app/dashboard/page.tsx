@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OpenModalButton from "../components/OpenModalButton";
 import SurveyBlock from "../components/SurveyBlock";
-import ModalContextProvider from "../contexts/modalContext";
+import CreateModalContextProvider from "../contexts/createSurveyModalContext";
 import { getSurveysByUserID } from "@/data/surveys";
 import { auth } from "@/auth";
 
@@ -23,7 +23,7 @@ const DashboardPage = async () => {
   const data = await getData();
   return (
     <>
-      <ModalContextProvider>
+      <CreateModalContextProvider>
         <div className="text-white">
           <div className="flex py-7">
             <div className="text-2xl w-1/2  flex items-center">
@@ -45,7 +45,7 @@ const DashboardPage = async () => {
             ))}
           </div>
         </div>
-      </ModalContextProvider>
+      </CreateModalContextProvider>
     </>
   );
 };

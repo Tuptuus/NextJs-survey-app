@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 type ModalContextProviderProps = {
   children: React.ReactNode;
@@ -21,6 +21,13 @@ export default function ModalContextProvider({
   children,
 }: ModalContextProviderProps) {
   const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    if (showModal === true) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [showModal]);
   return (
     <ModalContext.Provider value={{ showModal, setShowModal }}>
       {children}
@@ -28,7 +35,7 @@ export default function ModalContextProvider({
   );
 }
 
-export function useModalContext() {
+export function useDeleteModalContext() {
   const context = useContext(ModalContext);
   if (!context) {
     throw new Error("Error context");
