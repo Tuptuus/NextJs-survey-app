@@ -4,7 +4,7 @@ let initialQuestions: any = [];
 let initialQuestionsToDelete: any = [];
 let initialQuestionOptions: any = [];
 let initialOptionsToDelete: any = [];
-let initialActionAlert = "test";
+let initialActionAlert = "";
 const initialState = {
   questions: initialQuestions,
   questionsToDelete: initialQuestionsToDelete,

@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { LuPlus } from "react-icons/lu";
-import { useModalContext } from "../contexts/modalContext";
+import { useCreateModalContext } from "../contexts/createSurveyModalContext";
 import CreateSurveyModal from "./CreateSurveyModal";
 
 const OpenModalButton = () => {
-  const { showModal, setShowModal } = useModalContext();
+  const { showModal, setShowModal } = useCreateModalContext();
   const openCreateSurveyModal = () => {
     setShowModal(true);
   };
