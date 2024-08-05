@@ -14,6 +14,7 @@ model Survey {
   description    String
   createdAt      String
   questions      Question[]
+  Response       Response[]
 }
 
 model Question {
@@ -24,6 +25,7 @@ model Question {
   survey     Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
   type       Type     @default(SHORTTEXT)
   options    Option[]
+  Answer     Answer[]
 }
 
 enum Type {
@@ -41,13 +43,14 @@ model Option {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
+  id            String     @id @default(cuid()) @map("_id")
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   password      String?
   accounts      Account[]
+  Response      Response[]
 }
 
 model Account {
@@ -67,4 +70,23 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Response {
+  id       String   @id @default(cuid()) @map("_id")
+  userId   String?
+  surveyId String
+  survey   Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  user     User?    @relation(fields: [userId], references: [id])
+  Answer   Answer[]
+}
+
+model Answer {
+  id            String   @id @default(cuid()) @map("_id")
+  responseId    String
+  questionId    String
+  answerText    String?
+  answerOptions String[]
+  response      Response @relation(fields: [responseId], references: [id])
+  question      Question @relation(fields: [questionId], references: [id])
 }

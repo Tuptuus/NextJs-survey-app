@@ -35,8 +35,6 @@ const QuestionBlock: React.FC<question> = (props) => {
   const [switchIsRequired, setSwitchIsRequired] = useState(isRequired);
   const [changeQuestionTypeOpen, setChangeQuestionTypeOpen] = useState(false);
   const [currQuestionType, setCurrQuestionType] = useState(type);
-  // const questions = useAppSelector((state) => state.questionsReducer.questions);
-  // const thisQuestion = questions.filter((item: any) => item.id === id);
 
   const handleInput = (e: any) => {
     setQuestionTitleValue(e.target.value);
@@ -55,18 +53,10 @@ const QuestionBlock: React.FC<question> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const handleSwitchUpdate = () => {
-  //   dispatch(updateQuestionRequired({ id, isRequired: switchIsRequired }));
-  //   console.log(switchIsRequired);
-  // };
-
   useEffect(() => {
     dispatch(updateQuestionRequired({ id, isRequired: switchIsRequired }));
   }, [switchIsRequired, dispatch, id]);
 
-  // useEffect(() => {
-  //   console.log(questions);
-  // }, [questions]);
   return (
     <>
       <div className="px-6 py-8 border rounded-xl my-8">
