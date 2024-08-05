@@ -54,7 +54,6 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
     let newOptions = currOptions.concat(newOption);
     setOptionsState(newOptions);
     dispatch(addOptionAction(newOption));
-    // console.log(optionsState);
   };
 
   if (type === "SINGLECHOICE") {

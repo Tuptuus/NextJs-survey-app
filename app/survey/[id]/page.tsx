@@ -6,7 +6,6 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
-  divider,
   Input,
   Radio,
   RadioGroup,
@@ -67,24 +66,6 @@ function SurveyAnswerPage() {
             ))
           : null}
       </RadioGroup>
-      {/* {item.type === "SINGLECHOICE"
-        ? item.options.map((option) => (
-            <div className="flex mt-2" key={option.id}>
-              <input
-                className="cursor-pointer"
-                type="radio"
-                name={option.questionId as string}
-                id={option.id as string}
-              />
-              <label
-                htmlFor={option.id as string}
-                className="pl-2 cursor-pointer"
-              >
-                {option.text}
-              </label>
-            </div>
-          ))
-        : null} */}
 
       <CheckboxGroup color="warning">
         {item.type === "MULTICHOICE"
@@ -95,10 +76,6 @@ function SurveyAnswerPage() {
             ))
           : null}
       </CheckboxGroup>
-
-      {/* {item.type === "MULTICHOICE" ? (
-        <input type="checkbox" name="" id="" />
-      ) : null} */}
     </div>
   ));
   return (

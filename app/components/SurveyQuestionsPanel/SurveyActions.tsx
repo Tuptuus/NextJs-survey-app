@@ -76,10 +76,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
         </div>
         <div className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer">
           <Link href={`/survey/${actionsOnID}`} target="_blank">
-            <span
-              // onClick={() => router.push(`/survey/${actionsOnID}`)}
-              className="flex items-center"
-            >
+            <span className="flex items-center">
               <FaRegEye /> Zobacz
             </span>
           </Link>
