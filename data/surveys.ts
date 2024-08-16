@@ -82,3 +82,24 @@ export const saveQuestionsChanges = async (
   }
   revalidatePath("/");
 };
+
+export const saveAnswers = async (
+  surveyID: string,
+  userID: string,
+  answers: any
+) => {
+  await db.response.create({
+    data: {
+      surveyId: surveyID,
+      userId: userID,
+      answers: {
+        create: answers.map((answer: any) => ({
+          questionId: answer.questionId,
+          questionType: answer.questionType,
+          answerText: answer.answerText || null,
+          answerOptions: answer.answerOptions || null,
+        })),
+      },
+    },
+  });
+};

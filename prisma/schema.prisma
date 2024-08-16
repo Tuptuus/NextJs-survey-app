@@ -25,7 +25,7 @@ model Question {
   survey     Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
   type       Type     @default(SHORTTEXT)
   options    Option[]
-  Answer     Answer[]
+  answer     Answer[]
 }
 
 enum Type {
@@ -77,16 +77,17 @@ model Response {
   userId   String?
   surveyId String
   survey   Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
-  user     User?    @relation(fields: [userId], references: [id])
-  Answer   Answer[]
+  user     User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers  Answer[]
 }
 
 model Answer {
   id            String   @id @default(cuid()) @map("_id")
   responseId    String
   questionId    String
+  questionType  Type
   answerText    String?
   answerOptions String[]
-  response      Response @relation(fields: [responseId], references: [id])
-  question      Question @relation(fields: [questionId], references: [id])
+  response      Response @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  question      Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }

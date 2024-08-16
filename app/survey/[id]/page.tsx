@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getSurveyByID } from "@/data/surveys";
+import { getSurveyByID, saveAnswers } from "@/data/surveys";
 import {
   Button,
   Checkbox,
@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
 } from "@nextui-org/react";
+import { useCurrentUser } from "@/hooks/currentUser";
 
 interface option {
   id: string | null;
@@ -35,9 +36,19 @@ interface Survey {
   questions: Question[];
 }
 
+interface Answer {
+  questionId: string;
+  questionType: string;
+  answerText?: string;
+  answerOptions: string[];
+}
+
 function SurveyAnswerPage() {
   const [currSurvey, setCurrSurvey] = useState<Survey | null>(null);
+  const [answers, setAnswers] = useState<Answer[]>([]);
   const params = useParams();
+  const user = useCurrentUser();
+
   useEffect(() => {
     const getSurvey = async () => {
       const survey = await getSurveyByID(params.id as string);
@@ -45,29 +56,124 @@ function SurveyAnswerPage() {
     };
     getSurvey();
   }, [params]);
+
+  const handleInputsChange = (
+    questionId: string,
+    questionType: string,
+    value: string
+  ) => {
+    setAnswers((prevAnswers) => {
+      const existingAnswer = prevAnswers.find(
+        (ans) => ans.questionId === questionId
+      );
+      if (existingAnswer) {
+        return prevAnswers.map((ans) =>
+          ans.questionId === questionId
+            ? { ...ans, questionType, answerText: value }
+            : ans
+        );
+      }
+      return [
+        ...prevAnswers,
+        { questionId, questionType, answerText: value, answerOptions: [] },
+      ];
+    });
+  };
+
+  const handleOptionsChange = (
+    questionId: string,
+    questionType: string,
+    values: string[]
+  ) => {
+    setAnswers((prevAnswers) => {
+      const existingAnswer = prevAnswers.find(
+        (ans) => ans.questionId === questionId
+      );
+      if (existingAnswer) {
+        return prevAnswers.map((ans) =>
+          ans.questionId === questionId
+            ? { ...ans, questionType, answerOptions: values }
+            : ans
+        );
+      }
+      return [
+        ...prevAnswers,
+        { questionId, questionType, answerOptions: values },
+      ];
+    });
+  };
+
+  const handleSubmit = async () => {
+    saveAnswers(
+      currSurvey?.id as string,
+      currSurvey?.surveyToUserID as string,
+      answers
+    );
+  };
+
+  useEffect(() => {
+    console.log(answers);
+  }, [answers]);
+
   const questions = currSurvey?.questions.map((item) => (
     <div className="mt-5 border rounded-lg p-5" key={item.id}>
       <p className="text-lg">{item.title}</p>
 
       {item.type === "SHORTTEXT" ? (
-        <Input className="dark mt-2" type="text" label="Krótka odpowiedź" />
+        <Input
+          className="dark mt-2"
+          type="text"
+          label="Krótka odpowiedź"
+          onChange={(e) =>
+            handleInputsChange(
+              item.id as string,
+              item.type as string,
+              e.target.value
+            )
+          }
+        />
       ) : null}
 
       {item.type === "LONGTEXT" ? (
-        <Input className="dark mt-2" type="text" label="Długa odpowiedź" />
+        <Input
+          className="dark mt-2"
+          type="text"
+          label="Długa odpowiedź"
+          onChange={(e) => {
+            handleInputsChange(
+              item.id as string,
+              item.type as string,
+              e.target.value
+            );
+          }}
+        />
       ) : null}
 
-      <RadioGroup color="warning">
-        {item.type === "SINGLECHOICE"
-          ? item.options.map((option) => (
-              <div key={option.id} className="flex mt-2 dark">
-                <Radio value={option.text as string}>{option.text}</Radio>
-              </div>
-            ))
-          : null}
-      </RadioGroup>
+      {item.type === "SINGLECHOICE" && (
+        <RadioGroup
+          color="warning"
+          onChange={(e) =>
+            handleInputsChange(
+              item.id as string,
+              "SINGLECHOICE",
+              e.target.value
+            )
+          }
+        >
+          {item.options.map((option) => (
+            <div key={option.id} className="flex mt-2 dark">
+              <Radio value={option.text as string}>{option.text}</Radio>
+            </div>
+          ))}
+        </RadioGroup>
+      )}
 
-      <CheckboxGroup color="warning">
+      <CheckboxGroup
+        color="warning"
+        onChange={(values) =>
+          handleOptionsChange(item.id as string, "MULTICHOICE", values)
+        }
+      >
         {item.type === "MULTICHOICE"
           ? item.options.map((option) => (
               <div key={option.id} className="flex mt-2 dark">
@@ -91,7 +197,11 @@ function SurveyAnswerPage() {
           <div>{questions}</div>
         </div>
         <div className="my-8 flex flex-col items-start">
-          <Button className="bg-orange-500 text-white" size="lg">
+          <Button
+            onClick={handleSubmit}
+            className="bg-orange-500 text-white"
+            size="lg"
+          >
             ZAPISZ ODPOWIEDZI
           </Button>
         </div>
