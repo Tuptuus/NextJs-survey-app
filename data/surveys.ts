@@ -80,7 +80,6 @@ export const saveQuestionsChanges = async (
     console.log(err);
     return "Wystąpił nieznany błąd";
   }
-  revalidatePath("/");
 };
 
 export const saveAnswers = async (
@@ -88,18 +87,23 @@ export const saveAnswers = async (
   userID: string,
   answers: any
 ) => {
-  await db.response.create({
-    data: {
-      surveyId: surveyID,
-      userId: userID,
-      answers: {
-        create: answers.map((answer: any) => ({
-          questionId: answer.questionId,
-          questionType: answer.questionType,
-          answerText: answer.answerText || null,
-          answerOptions: answer.answerOptions || null,
-        })),
+  try {
+    await db.response.create({
+      data: {
+        surveyId: surveyID,
+        userId: userID,
+        answers: {
+          create: answers.map((answer: any) => ({
+            questionId: answer.questionId,
+            questionType: answer.questionType,
+            answerText: answer.answerText || null,
+            answerOptions: answer.answerOptions || null,
+          })),
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  redirect(`/survey/${surveyID}/surveyResponse`);
 };

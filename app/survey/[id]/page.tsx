@@ -193,7 +193,7 @@ function SurveyAnswerPage() {
           </p>
           <p>{currSurvey ? currSurvey.description : null}</p>
         </div>
-        <div className=" mt-5">
+        <div className="mt-5">
           <div>{questions}</div>
         </div>
         <div className="my-8 flex flex-col items-start">
