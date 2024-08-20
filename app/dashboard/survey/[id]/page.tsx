@@ -124,7 +124,7 @@ function SurveyPage() {
             {currMode == "questions" ? (
               currSurvey && <SurveyQuestions {...currSurvey} />
             ) : (
-              <SurveyAnswers />
+              <SurveyAnswers currSurvey={currSurvey} />
             )}
           </div>
         </div>
