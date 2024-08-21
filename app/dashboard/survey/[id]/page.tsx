@@ -47,7 +47,6 @@ function SurveyPage() {
 
   const changeDisplayPage = (btn: string) => {
     setCurrMode(btn);
-    console.log(currSurvey);
   };
 
   useEffect(() => {
@@ -124,7 +123,7 @@ function SurveyPage() {
             {currMode == "questions" ? (
               currSurvey && <SurveyQuestions {...currSurvey} />
             ) : (
-              <SurveyAnswers currSurvey={currSurvey} />
+              <SurveyAnswers />
             )}
           </div>
         </div>

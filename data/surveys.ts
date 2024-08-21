@@ -20,11 +20,34 @@ export const getSurveyByID = async (id: string) => {
   try {
     const survey = await db.survey.findUnique({
       where: { id: id },
+      include: { questions: { include: { options: true } } },
+    });
+    return survey;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const getSurveyByIDforAnswers = async (id: string) => {
+  try {
+    const survey = await db.survey.findUnique({
+      where: { id: id },
       include: { questions: { include: { options: true, answer: true } } },
     });
     return survey;
   } catch (err) {
     console.log(err);
+    return null;
+  }
+};
+
+export const getResponses = async (id: string) => {
+  try {
+    const responses = await db.response.findMany({ where: { surveyId: id } });
+    return responses;
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };
