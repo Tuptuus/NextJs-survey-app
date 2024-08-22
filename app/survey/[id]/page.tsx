@@ -9,6 +9,7 @@ import {
   Input,
   Radio,
   RadioGroup,
+  Spinner,
 } from "@nextui-org/react";
 import { useCurrentUser } from "@/hooks/currentUser";
 
@@ -184,30 +185,38 @@ function SurveyAnswerPage() {
       </CheckboxGroup>
     </div>
   ));
-  return (
-    <div className="text-white flex justify-center">
-      <div className="w-[800px] mx-5 mt-5">
-        <div className="bg-orange-500 h-20 rounded-lg pl-5 flex flex-col justify-center">
-          <p onClick={() => console.log(currSurvey)}>
-            {currSurvey ? currSurvey.title : null}
-          </p>
-          <p>{currSurvey ? currSurvey.description : null}</p>
-        </div>
-        <div className="mt-5">
-          <div>{questions}</div>
-        </div>
-        <div className="my-8 flex flex-col items-start">
-          <Button
-            onClick={handleSubmit}
-            className="bg-orange-500 text-white"
-            size="lg"
-          >
-            ZAPISZ ODPOWIEDZI
-          </Button>
+  if (currSurvey) {
+    return (
+      <div className="text-white flex justify-center">
+        <div className="w-[800px] mx-5 mt-5">
+          <div className="bg-orange-500 h-20 rounded-lg pl-5 flex flex-col justify-center">
+            <p onClick={() => console.log(currSurvey)}>
+              {currSurvey ? currSurvey.title : null}
+            </p>
+            <p>{currSurvey ? currSurvey.description : null}</p>
+          </div>
+          <div className="mt-5">
+            <div>{questions}</div>
+          </div>
+          <div className="my-8 flex flex-col items-start">
+            <Button
+              onClick={handleSubmit}
+              className="bg-orange-500 text-white"
+              size="lg"
+            >
+              ZAPISZ ODPOWIEDZI
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="flex justify-center items-center text-white dark h-screen">
+        <Spinner color="warning" label="Loading..." size="lg" />
+      </div>
+    );
+  }
 }
 
 export default SurveyAnswerPage;

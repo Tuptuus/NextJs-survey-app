@@ -45,6 +45,7 @@ export const getSurveyByIDforAnswers = async (id: string) => {
 export const getResponses = async (id: string) => {
   try {
     const responses = await db.response.findMany({ where: { surveyId: id } });
+    console.log(responses);
     return responses;
   } catch (error) {
     console.log(error);

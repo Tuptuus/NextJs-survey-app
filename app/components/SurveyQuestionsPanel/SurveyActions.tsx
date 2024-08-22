@@ -74,13 +74,13 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
             <FaPlus /> Pytanie
           </span>
         </div>
-        <div className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer">
-          <Link href={`/survey/${actionsOnID}`} target="_blank">
+        <Link href={`/survey/${actionsOnID}`} target="_blank">
+          <div className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer">
             <span className="flex items-center">
               <FaRegEye /> Zobacz
             </span>
-          </Link>
-        </div>
+          </div>
+        </Link>
         <div
           onClick={() => console.log(questions)}
           className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
