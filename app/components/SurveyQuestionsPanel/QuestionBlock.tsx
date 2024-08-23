@@ -17,6 +17,7 @@ import short from "short-uuid";
 interface option {
   id: string | null;
   text: string | null;
+  questionId: string | null;
 }
 
 interface question {
@@ -31,6 +32,7 @@ interface question {
 const QuestionBlock: React.FC<question> = (props) => {
   const dispatch = useDispatch();
   const { questionTitle, id, isRequired, type, options } = props;
+  const [currOptions, setCurrOptions] = useState<option[] | null>(null);
   const [questionTitleValue, setQuestionTitleValue] = useState(questionTitle);
   const [switchIsRequired, setSwitchIsRequired] = useState(isRequired);
   const [changeQuestionTypeOpen, setChangeQuestionTypeOpen] = useState(false);
@@ -49,6 +51,7 @@ const QuestionBlock: React.FC<question> = (props) => {
 
   useEffect(() => {
     dispatch(setQuestionOptions(options));
+    setCurrOptions(options);
     // console.log(options);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

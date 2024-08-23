@@ -132,7 +132,7 @@ function SurveyAnswers() {
             </div>
           ) : null}
           {item.type === "SINGLECHOICE" ? (
-            <div className="w-96 h-96">
+            <div className="w-[600px] flex justify-center">
               <Pie options={options} data={chartData} />
             </div>
           ) : null}

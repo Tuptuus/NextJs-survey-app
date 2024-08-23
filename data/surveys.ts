@@ -4,6 +4,12 @@ import { create } from "domain";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+type QuestionOption = {
+  id: string;
+  text: string;
+  questionId: string;
+};
+
 export const getSurveysByUserID = async (id: string) => {
   try {
     const surveys = await db.survey.findMany({
@@ -85,21 +91,67 @@ export const deleteSurveyByID = async (id: string) => {
 //   revalidatePath("/");
 // };
 
+// export const resetOptions = async (id: string) => {
+//   try {
+//     await db.option.deleteMany({ where: { questionId: id } });
+//     await db.option.createMany({
+//       data: [
+//         { text: "Opcja 1", questionId: id },
+//         { text: "Opcja 2", questionId: id },
+//       ],
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+const checkForDuplicatesTexts = (data: QuestionOption[]) => {
+  const groupedTexts: { [key: string]: string[] } = {};
+
+  for (const item of data) {
+    const { questionId, text } = item;
+    if (!groupedTexts[questionId]) {
+      groupedTexts[questionId] = [];
+    }
+    groupedTexts[questionId].push(text);
+  }
+
+  for (const questionId in groupedTexts) {
+    const texts = groupedTexts[questionId];
+    const textCounts: { [key: string]: number } = {};
+
+    for (const text of texts) {
+      if (textCounts[text]) {
+        textCounts[text]++;
+      } else {
+        textCounts[text] = 1;
+      }
+
+      if (textCounts[text] > 1) {
+        return `Błąd: Dla questionId '${questionId}' występuje powtarzający się tekst '${text}'.`;
+      }
+    }
+  }
+  return "Nie znaleziono powtarzających się tekstów dla żadnego questionId.";
+};
+
 export const saveQuestionsChanges = async (
   questions: any,
   deletedQuestions: any,
   options: any
 ) => {
   try {
-    const deleteAll = questions.concat(deletedQuestions);
-    questions.forEach((obj: any) => {
-      delete obj.options;
-    });
-    const idsToDelete = deleteAll.map((item: any) => item.id);
-    await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
-    await db.question.createMany({ data: questions });
-    await db.option.createMany({ data: options });
-    return "✅ Zapisano zmiany";
+    console.log(questions);
+    // const test = checkForDuplicatesTexts(options);
+    // const deleteAll = questions.concat(deletedQuestions);
+    // questions.forEach((obj: any) => {
+    //   delete obj.options;
+    // });
+    // const idsToDelete = deleteAll.map((item: any) => item.id);
+    // await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
+    // await db.question.createMany({ data: questions });
+    // await db.option.createMany({ data: options });
+    // return "✅ Zapisano zmiany";
   } catch (err) {
     console.log(err);
     return "Wystąpił nieznany błąd";

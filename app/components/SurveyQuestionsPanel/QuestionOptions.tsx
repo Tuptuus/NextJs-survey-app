@@ -84,12 +84,14 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
               ) : null}
             </div>
           ))}
-          <span
-            onClick={() => createNewOption()}
-            className="cursor-pointer text-orange-400 hover:underline"
-          >
-            Dodaj opcję
-          </span>
+          {optionsState.length < 20 ? (
+            <span
+              onClick={() => createNewOption()}
+              className="cursor-pointer text-orange-400 hover:underline"
+            >
+              Dodaj opcję
+            </span>
+          ) : null}
         </div>
       </>
     );

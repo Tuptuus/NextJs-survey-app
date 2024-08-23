@@ -162,7 +162,11 @@ function SurveyAnswerPage() {
           }
         >
           {item.options.map((option) => (
-            <div key={option.id} className="flex mt-2 dark">
+            <div
+              onClick={() => console.log(option)}
+              key={option.id}
+              className="flex mt-2 dark"
+            >
               <Radio value={option.text as string}>{option.text}</Radio>
             </div>
           ))}

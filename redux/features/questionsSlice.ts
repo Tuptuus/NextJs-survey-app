@@ -66,7 +66,7 @@ export const questions = createSlice({
       state.questions = updatedQuestions;
     },
     changeQuestionType: (state, action) => {
-      // console.log(action.payload);
+      console.log(action.payload);
       const updatedQuestions = state.questions.map((question: any) => {
         if (question.id === action.payload.id) {
           return { ...question, type: action.payload.type };
