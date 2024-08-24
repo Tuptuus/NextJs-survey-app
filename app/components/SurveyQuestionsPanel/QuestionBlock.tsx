@@ -4,13 +4,14 @@ import { Switch, cn } from "@nextui-org/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import {
+  addOptionAction,
   changeQuestionType,
+  deleteOptionAction,
   deleteQuestion,
   setQuestionOptions,
   updateQuestionRequired,
   updateQuestionTitle,
 } from "@/redux/features/questionsSlice";
-import { useAppSelector } from "@/redux/store";
 import QuestionOptions from "./QuestionOptions";
 import short from "short-uuid";
 
@@ -32,7 +33,7 @@ interface question {
 const QuestionBlock: React.FC<question> = (props) => {
   const dispatch = useDispatch();
   const { questionTitle, id, isRequired, type, options } = props;
-  const [currOptions, setCurrOptions] = useState<option[] | null>(null);
+  const [currOptions, setCurrOptions] = useState(options);
   const [questionTitleValue, setQuestionTitleValue] = useState(questionTitle);
   const [switchIsRequired, setSwitchIsRequired] = useState(isRequired);
   const [changeQuestionTypeOpen, setChangeQuestionTypeOpen] = useState(false);
@@ -44,14 +45,37 @@ const QuestionBlock: React.FC<question> = (props) => {
   };
 
   const handleQuestionType = (passType: string) => {
+    // const idsToDelete = currOptions.map((option) => option.id);
+    // idsToDelete.forEach((id) => {
+    //   dispatch(deleteOptionAction(id));
+    // });
+    // setCurrOptions([
+    //   {
+    //     id: short.generate(),
+    //     text: "Opcja 1",
+    //     questionId: id,
+    //   },
+    //   {
+    //     id: short.generate(),
+    //     text: "Opcja 2",
+    //     questionId: id,
+    //   },
+    // ]);
     setCurrQuestionType(passType);
     dispatch(changeQuestionType({ id, type: passType }));
     setChangeQuestionTypeOpen(false);
   };
 
+  // useEffect(() => {
+  //   setQuestionOptions(currOptions);
+  // }, [currOptions]);
+
+  // useEffect(() => {
+  //   console.log(currOptions);
+  // });
+
   useEffect(() => {
     dispatch(setQuestionOptions(options));
-    setCurrOptions(options);
     // console.log(options);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -62,7 +86,10 @@ const QuestionBlock: React.FC<question> = (props) => {
 
   return (
     <>
-      <div className="px-6 py-8 border rounded-xl my-8">
+      <div
+        onClick={() => console.log(currOptions)}
+        className="px-6 py-8 border rounded-xl my-8"
+      >
         <div className="flex flex-col relative border w-full rounded-xl">
           <label className="absolute pointer-events-none left-4 top-2 text-sm">
             Tytuł pytania
@@ -86,7 +113,11 @@ const QuestionBlock: React.FC<question> = (props) => {
             </p>
           ) : null}
           {currQuestionType === "SINGLECHOICE" || "MULTICHOICE" ? (
-            <QuestionOptions questionID={id} options={options} type={type} />
+            <QuestionOptions
+              questionID={id}
+              options={currOptions}
+              type={type}
+            />
           ) : null}
           {/* {currQuestionType === "MULTICHOICE" ? (
             <QuestionOptions questionID={id} options={options} type={type} />

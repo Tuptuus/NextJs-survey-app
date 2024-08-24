@@ -30,6 +30,10 @@ const QuestionOptions: React.FC<optionProps> = (props) => {
   );
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setOptionsState(options);
+  }, [options]);
+
   const handleOptionsInput = (id: string, text: string) => {
     const updatedOptions = optionsState.map((option) =>
       option.id === id ? { ...option, text } : option
