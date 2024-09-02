@@ -141,8 +141,15 @@ export const saveQuestionsChanges = async (
   options: any
 ) => {
   try {
-    // console.log(questions);
-    // console.log(options);
+    const answersArray: any[] = [];
+    await Promise.all(
+      questions.map(async (item: any) => {
+        const answer = await db.answer.findMany({
+          where: { questionId: item.id },
+        });
+        answersArray.push(...answer);
+      })
+    );
     const test = checkForDuplicatesTexts(options);
     const deleteAll = questions.concat(deletedQuestions);
     questions.forEach((obj: any) => {
@@ -152,6 +159,9 @@ export const saveQuestionsChanges = async (
     await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
     await db.question.createMany({ data: questions });
     await db.option.createMany({ data: options });
+    if (answersArray.length != 0) {
+      await db.answer.createMany({ data: answersArray });
+    }
     return "✅ Zapisano zmiany";
   } catch (err) {
     console.log(err);

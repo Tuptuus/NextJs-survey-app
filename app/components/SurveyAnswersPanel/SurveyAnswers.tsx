@@ -1,7 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, Tooltip, Legend, ArcElement } from "chart.js/auto";
+import { Pie, Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+} from "chart.js/auto";
 import { getResponses, getSurveyByIDforAnswers } from "@/data/surveys";
 import { useParams } from "next/navigation";
 import { Spinner } from "@nextui-org/react";
@@ -60,9 +69,18 @@ function SurveyAnswers() {
     };
     getResponsesFunc();
   }, [currSurveyID]);
-  ChartJS.register(Tooltip, Legend, ArcElement);
-  const options = {
+  ChartJS.register(
+    Tooltip,
+    Legend,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title
+  );
+  const pieOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
@@ -70,30 +88,63 @@ function SurveyAnswers() {
       },
     },
   };
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    indexAxis: "x" as "x",
+    scales: {
+      x: {
+        beginAtZero: true,
+        title: {
+          display: false,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        title: {
+          display: false,
+        },
+      },
+    },
+  };
 
   const generateColors = (numColors: number): string[] => {
     const colors = [];
     for (let i = 0; i < numColors; i++) {
-      const hue = i * (360 / numColors); // Równomierne rozmieszczenie barw
-      const saturation = 70 + Math.random() * 20; // Saturowanie od 70% do 90%
-      const lightness = 50 + Math.random() * 10; // Jasność od 50% do 60%
+      const hue = i * (360 / numColors);
+      const saturation = 70 + Math.random() * 20;
+      const lightness = 50 + Math.random() * 10;
       colors.push(`hsl(${hue}, ${saturation}%, ${lightness}%)`);
     }
     return colors;
   };
 
   const answers = questions.map((item: any) => {
-    const answerCounts: Record<string, number> = item.answer.reduce(
-      (acc: any, answer: any) => {
-        acc[answer.answerText] = (acc[answer.answerText] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>
-    );
+    const answerCounts: Record<string, number> = {};
+
+    // Liczenie odpowiedzi w zależności od typu pytania
+    if (item.type === "SINGLECHOICE") {
+      item.answer.forEach((answer: any) => {
+        const answerText = answer.answerText;
+        answerCounts[answerText] = (answerCounts[answerText] || 0) + 1;
+      });
+    } else if (item.type === "MULTICHOICE") {
+      item.answer.forEach((answer: any) => {
+        const selectedOptions = answer.answerOptions;
+        selectedOptions.forEach((option: string) => {
+          answerCounts[option] = (answerCounts[option] || 0) + 1;
+        });
+      });
+    }
     const labels = item.options.map((opt: any) => opt.text);
     const data = labels.map((label: any) => answerCounts[label] || 0);
     const backgroundColor = generateColors(labels.length);
-    const chartData = {
+    const pieChartData = {
       labels: labels,
       datasets: [
         {
@@ -103,6 +154,17 @@ function SurveyAnswers() {
         },
       ],
     };
+    const barChartData = {
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+          backgroundColor: backgroundColor,
+          borderWidth: 1,
+        },
+      ],
+    };
+    // console.log("bar chart test: ", barChartData.datasets[0].data);
     return (
       <div
         onClick={() => console.log(item)}
@@ -132,8 +194,13 @@ function SurveyAnswers() {
             </div>
           ) : null}
           {item.type === "SINGLECHOICE" ? (
-            <div className="w-[600px] flex justify-center">
-              <Pie options={options} data={chartData} />
+            <div className="relative h-[30vh]">
+              <Pie options={pieOptions} data={pieChartData} />
+            </div>
+          ) : null}
+          {item.type === "MULTICHOICE" ? (
+            <div className="relative">
+              <Bar options={barOptions} data={barChartData} />
             </div>
           ) : null}
         </div>
