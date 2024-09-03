@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const LoginPage = () => {
+const StartPage = () => {
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-gray-950">
       <div className="text-white flex flex-col items-center">
@@ -20,4 +20,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default StartPage;
