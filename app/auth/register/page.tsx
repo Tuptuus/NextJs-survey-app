@@ -5,11 +5,14 @@ import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { useRouter } from "next/navigation";
+import { login } from "@/actions/login";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const router = useRouter();
 
   const handleInputsValue = (e: any, type: String) => {
     if (type == "name") {
@@ -21,9 +24,14 @@ const RegisterPage = () => {
     }
   };
 
-  const sendData = () => {
+  const sendData = async () => {
     const data = { name, email, pass };
-    register(data);
+    const loginData = { email, pass };
+    const result = await register(data);
+    if (result.success) {
+      await login(loginData);
+      router.push("/dashboard");
+    }
     setName("");
     setEmail("");
     setPass("");
@@ -64,7 +72,7 @@ const RegisterPage = () => {
         <input
           className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96 "
           onChange={(e) => handleInputsValue(e, "pass")}
-          type="text"
+          type="password"
           placeholder="Password"
           value={pass}
         />
