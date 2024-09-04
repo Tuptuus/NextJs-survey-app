@@ -13,15 +13,15 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
-  const trustedHosts = [
-    "localhost:3000",
-    process.env.NEXTAUTH_URL?.replace(/^https?:\/\//, ""),
-  ];
+  // const trustedHosts = [
+  //   "localhost:3000",
+  //   process.env.NEXTAUTH_URL?.replace(/^https?:\/\//, ""),
+  // ];
 
-  if (!trustedHosts.includes(nextUrl.host)) {
-    console.error(`Untrusted host: ${nextUrl.host}`);
-    return new Response("Untrusted Host", { status: 403 });
-  }
+  // if (!trustedHosts.includes(nextUrl.host)) {
+  //   console.error(`Untrusted host: ${nextUrl.host}`);
+  //   return new Response("Untrusted Host", { status: 403 });
+  // }
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
