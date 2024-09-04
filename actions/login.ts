@@ -2,11 +2,11 @@
 import { signIn } from "@/auth";
 
 export const login = async (data: any) => {
-  const { email, pass } = data;
+  const { email, password } = data;
   try {
     await signIn("credentials", {
       email,
-      password: pass,
+      password,
       redirect: false,
     });
   } catch (err) {

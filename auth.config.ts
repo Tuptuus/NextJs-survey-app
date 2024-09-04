@@ -13,7 +13,7 @@ export default {
     Credentials({
       async authorize(credentials) {
         const data = credentials;
-        const { email, password } = data;
+        const { email, password, callback } = data;
         if (data) {
           const user = await getUserByEmail(email as string);
           if (!user || !user.password) return null;

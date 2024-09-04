@@ -26,7 +26,7 @@ const RegisterPage = () => {
 
   const sendData = async () => {
     const data = { name, email, pass };
-    const loginData = { email, pass };
+    const loginData = { email, password: pass };
     const result = await register(data);
     if (result.success) {
       await login(loginData);
