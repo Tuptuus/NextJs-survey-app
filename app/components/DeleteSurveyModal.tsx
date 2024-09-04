@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { MdClose } from "react-icons/md";
 import { useDeleteModalContext } from "../contexts/deleteSurveyModalContext";
 import { deleteSurveyByID } from "@/data/surveys";

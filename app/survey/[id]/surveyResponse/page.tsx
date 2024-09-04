@@ -27,10 +27,7 @@ function SurveyResponse() {
   return (
     <div className="text-white flex justify-center">
       <div className="w-[800px] mx-5 mt-5">
-        <div
-          onClick={() => console.log(currSurvey)}
-          className="bg-orange-500 h-20 rounded-lg pl-5 flex flex-col justify-center"
-        >
+        <div className="bg-orange-500 h-20 rounded-lg pl-5 flex flex-col justify-center">
           <p>Ankieta: {currSurvey ? currSurvey.title : null}</p>
         </div>
         <div className="mt-5 border rounded-lg p-5 flex flex-col items-center">

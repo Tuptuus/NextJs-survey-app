@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 let initialQuestions: any = [];
 let initialQuestionsToDelete: any = [];
@@ -24,7 +24,6 @@ export const questions = createSlice({
       state.optionsToDelete = [];
     },
     setQuestions: (state, action) => {
-      // console.log(action.payload);
       state.questions = action.payload;
     },
     addQuestions: (state, action) => {
@@ -44,7 +43,6 @@ export const questions = createSlice({
       state.questions = newQuestions;
     },
     updateQuestionTitle: (state, action) => {
-      // console.log(action.payload);
       const updatedQuestions = state.questions.map((question: any) => {
         if (question.id === action.payload.id) {
           return { ...question, title: action.payload.title };
@@ -55,7 +53,6 @@ export const questions = createSlice({
       state.questions = updatedQuestions;
     },
     updateQuestionRequired: (state, action) => {
-      // console.log(action.payload);
       const updatedQuestions = state.questions.map((question: any) => {
         if (question.id === action.payload.id) {
           return { ...question, isRequired: action.payload.isRequired };
@@ -66,7 +63,6 @@ export const questions = createSlice({
       state.questions = updatedQuestions;
     },
     changeQuestionType: (state, action) => {
-      // console.log(action.payload);
       const updatedQuestions = state.questions.map((question: any) => {
         if (question.id === action.payload.id) {
           return { ...question, type: action.payload.type };

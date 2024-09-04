@@ -2,7 +2,6 @@
 import SurveyAnswers from "@/app/components/SurveyAnswersPanel/SurveyAnswers";
 import SurveyQuestions from "@/app/components/SurveyQuestionsPanel/SurveyQuestions";
 import { getSurveyByID } from "@/data/surveys";
-import { useCurrentUser } from "@/hooks/currentUser";
 import { clearStates } from "@/redux/features/questionsSlice";
 import { useAppSelector } from "@/redux/store";
 import { useParams } from "next/navigation";
@@ -91,10 +90,7 @@ function SurveyPage() {
         ) : null}
 
         <div>
-          <div
-            onClick={() => console.log(currSurvey)}
-            className="text-2xl w-1/2  flex items-center py-7"
-          >
+          <div className="text-2xl w-1/2  flex items-center py-7">
             Ankieta: {currSurvey ? currSurvey.title : null}
           </div>
         </div>

@@ -2,7 +2,6 @@
 import bcryptjs from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
-import { login } from "@/actions/login";
 
 export const register = async (data: any) => {
   const { name, email, pass } = data;

@@ -48,7 +48,6 @@ function SurveyAnswerPage() {
   const [currSurvey, setCurrSurvey] = useState<Survey | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const params = useParams();
-  const user = useCurrentUser();
 
   useEffect(() => {
     const getSurvey = async () => {
@@ -112,10 +111,6 @@ function SurveyAnswerPage() {
     );
   };
 
-  useEffect(() => {
-    console.log(answers);
-  }, [answers]);
-
   const questions = currSurvey?.questions.map((item) => (
     <div className="mt-5 border rounded-lg p-5" key={item.id}>
       <p className="text-lg">{item.title}</p>
@@ -162,11 +157,7 @@ function SurveyAnswerPage() {
           }
         >
           {item.options.map((option) => (
-            <div
-              onClick={() => console.log(option)}
-              key={option.id}
-              className="flex mt-2 dark"
-            >
+            <div key={option.id} className="flex mt-2 dark">
               <Radio value={option.text as string}>{option.text}</Radio>
             </div>
           ))}
@@ -194,9 +185,7 @@ function SurveyAnswerPage() {
       <div className="text-white flex justify-center">
         <div className="w-[800px] mx-5 mt-5">
           <div className="bg-orange-500 h-20 rounded-lg pl-5 flex flex-col justify-center">
-            <p onClick={() => console.log(currSurvey)}>
-              {currSurvey ? currSurvey.title : null}
-            </p>
+            <p>{currSurvey ? currSurvey.title : null}</p>
             <p>{currSurvey ? currSurvey.description : null}</p>
           </div>
           <div className="mt-5">

@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  pageExtensions: ["page.tsx", "page.ts", "ts"],
+  reactStrictMode: false,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

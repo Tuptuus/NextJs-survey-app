@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 export const createSurvey = async (data: any) => {
   const { surveyToUserID, title, description, createdAt } = data;
-  const survey = await db.survey.create({
+  await db.survey.create({
     data: {
       surveyToUserID,
       title,
@@ -33,15 +33,6 @@ export const createSurvey = async (data: any) => {
         ],
       },
     },
-    // include: {
-    //   questions: {
-    //     include: {
-    //       options: true,
-    //     },
-    //   },
-    // },
-    // include: { questions: true },
   });
-  console.log(survey);
   revalidatePath("/");
 };

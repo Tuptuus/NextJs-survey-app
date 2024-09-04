@@ -1,6 +1,5 @@
 "use client";
 import {
-  setQuestionOptions,
   updateQuestionOptionText,
   deleteOptionAction,
   addOptionAction,
@@ -25,9 +24,6 @@ interface optionProps {
 const QuestionOptions: React.FC<optionProps> = (props) => {
   const { options, type, questionID } = props;
   const [optionsState, setOptionsState] = useState(options);
-  const test = useAppSelector(
-    (state) => state.questionsReducer.questionOptions
-  );
   const dispatch = useDispatch();
 
   useEffect(() => {

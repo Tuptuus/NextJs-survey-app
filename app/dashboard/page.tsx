@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import OpenModalButton from "../components/OpenModalButton";
 import SurveyBlock from "../components/SurveyBlock";
 import CreateModalContextProvider from "../contexts/createSurveyModalContext";

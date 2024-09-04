@@ -127,7 +127,6 @@ function SurveyAnswers() {
   const answers = questions.map((item: any) => {
     const answerCounts: Record<string, number> = {};
 
-    // Liczenie odpowiedzi w zależności od typu pytania
     if (item.type === "SINGLECHOICE") {
       item.answer.forEach((answer: any) => {
         const answerText = answer.answerText;
@@ -164,13 +163,8 @@ function SurveyAnswers() {
         },
       ],
     };
-    // console.log("bar chart test: ", barChartData.datasets[0].data);
     return (
-      <div
-        onClick={() => console.log(item)}
-        className="border rounded-xl p-6 my-8"
-        key={item.id}
-      >
+      <div className="border rounded-xl p-6 my-8" key={item.id}>
         <div>
           <p>{item.title}</p>
         </div>
@@ -213,9 +207,7 @@ function SurveyAnswers() {
       <>
         {responses.length !== 0 ? (
           <>
-            <p onClick={() => console.log(responses)}>
-              Liczba odpowiedzi: {responses ? responses.length : null}
-            </p>
+            <p>Liczba odpowiedzi: {responses ? responses.length : null}</p>
             <div className="flex flex-col">{answers}</div>
           </>
         ) : (

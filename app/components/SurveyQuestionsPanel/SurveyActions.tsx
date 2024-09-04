@@ -1,8 +1,7 @@
 "use client";
 import { useAppSelector } from "@/redux/store";
 import short from "short-uuid";
-// import { addQuestionToSurvey, deleteSurveyByID } from "@/data/surveys";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FaPlus,
   FaRegCheckCircle,
@@ -12,7 +11,7 @@ import {
 import { MdShare } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { addQuestions, setActionAlert } from "@/redux/features/questionsSlice";
-import { deleteSurveyByID, saveQuestionsChanges } from "@/data/surveys";
+import { saveQuestionsChanges } from "@/data/surveys";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDeleteModalContext } from "@/app/contexts/deleteSurveyModalContext";
@@ -32,7 +31,6 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
     (state) => state.questionsReducer.questionsToDelete
   );
   const dispatch = useDispatch();
-  const router = useRouter();
   const addQuestionFunction = () => {
     const shortID = short.generate();
     const question = {
@@ -81,10 +79,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
             </span>
           </div>
         </Link>
-        <div
-          onClick={() => console.log(questions)}
-          className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
-        >
+        <div className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer">
           <span
             onClick={() => {
               navigator.clipboard.writeText(

@@ -17,8 +17,6 @@ export default auth((req) => {
     "localhost:3000",
     process.env.NEXTAUTH_URL?.replace(/^https?:\/\//, ""),
   ];
-  console.log("host: ", nextUrl.host);
-  console.log("trusted: ", trustedHosts);
 
   if (!trustedHosts.includes(nextUrl.host)) {
     console.error(`Untrusted host: ${nextUrl.host}`);

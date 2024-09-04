@@ -4,16 +4,13 @@ import { Switch, cn } from "@nextui-org/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import {
-  addOptionAction,
   changeQuestionType,
-  deleteOptionAction,
   deleteQuestion,
   setQuestionOptions,
   updateQuestionRequired,
   updateQuestionTitle,
 } from "@/redux/features/questionsSlice";
 import QuestionOptions from "./QuestionOptions";
-import short from "short-uuid";
 
 interface option {
   id: string | null;
@@ -45,38 +42,13 @@ const QuestionBlock: React.FC<question> = (props) => {
   };
 
   const handleQuestionType = (passType: string) => {
-    // const idsToDelete = currOptions.map((option) => option.id);
-    // idsToDelete.forEach((id) => {
-    //   dispatch(deleteOptionAction(id));
-    // });
-    // setCurrOptions([
-    //   {
-    //     id: short.generate(),
-    //     text: "Opcja 1",
-    //     questionId: id,
-    //   },
-    //   {
-    //     id: short.generate(),
-    //     text: "Opcja 2",
-    //     questionId: id,
-    //   },
-    // ]);
     setCurrQuestionType(passType);
     dispatch(changeQuestionType({ id, type: passType }));
     setChangeQuestionTypeOpen(false);
   };
 
-  // useEffect(() => {
-  //   setQuestionOptions(currOptions);
-  // }, [currOptions]);
-
-  // useEffect(() => {
-  //   console.log(currOptions);
-  // });
-
   useEffect(() => {
     dispatch(setQuestionOptions(options));
-    // console.log(options);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -86,10 +58,7 @@ const QuestionBlock: React.FC<question> = (props) => {
 
   return (
     <>
-      <div
-        onClick={() => console.log(currOptions)}
-        className="px-6 py-8 border rounded-xl my-8"
-      >
+      <div className="px-6 py-8 border rounded-xl my-8">
         <div className="flex flex-col relative border w-full rounded-xl">
           <label className="absolute pointer-events-none left-4 top-2 text-sm">
             Tytuł pytania
@@ -119,9 +88,6 @@ const QuestionBlock: React.FC<question> = (props) => {
               type={type}
             />
           ) : null}
-          {/* {currQuestionType === "MULTICHOICE" ? (
-            <QuestionOptions questionID={id} options={options} type={type} />
-          ) : null} */}
         </div>
         <div className="flex mt-8">
           <div className="w-2/3 flex relative">
@@ -177,7 +143,6 @@ const QuestionBlock: React.FC<question> = (props) => {
           <div className="w-1/3 flex justify-end items-center text-lg">
             <div
               onClick={() => dispatch(deleteQuestion(id))}
-              // onClick={() => console.log(props)}
               className="mx-5 cursor-pointer p-3 rounded-xl hover:bg-orange-500 transition-all"
             >
               <FaRegTrashAlt className="text-2xl" />
@@ -186,7 +151,6 @@ const QuestionBlock: React.FC<question> = (props) => {
               <Switch
                 isSelected={switchIsRequired}
                 onValueChange={setSwitchIsRequired}
-                // onChange={handleSwitchUpdate}
                 color="warning"
                 classNames={{ wrapper: cn("bg-gray-500") }}
               >

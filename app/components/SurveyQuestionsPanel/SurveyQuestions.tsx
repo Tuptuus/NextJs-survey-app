@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import QuestionBlock from "./QuestionBlock";
 import SurveyActions from "./SurveyActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setQuestions } from "@/redux/features/questionsSlice";
 import { useAppSelector } from "@/redux/store";
 

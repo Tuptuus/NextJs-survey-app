@@ -1,7 +1,5 @@
 "use server";
 import { db } from "@/lib/db";
-import { create } from "domain";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 type QuestionOption = {
@@ -51,7 +49,6 @@ export const getSurveyByIDforAnswers = async (id: string) => {
 export const getResponses = async (id: string) => {
   try {
     const responses = await db.response.findMany({ where: { surveyId: id } });
-    console.log(responses);
     return responses;
   } catch (error) {
     console.log(error);
@@ -67,43 +64,6 @@ export const deleteSurveyByID = async (id: string) => {
   }
   redirect("/dashboard");
 };
-
-// export const addQuestionToSurvey = async (id: string) => {
-//   try {
-//     await db.survey.update({
-//       where: { id: id },
-//       data: {
-//         questions: { create: [{ text: "Nowe pytanie" }] },
-//       },
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   revalidatePath("/");
-// };
-
-// export const deleteQuestionFromSurvey = async (id: string) => {
-//   try {
-//     await db.question.delete({ where: { id: id } });
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   revalidatePath("/");
-// };
-
-// export const resetOptions = async (id: string) => {
-//   try {
-//     await db.option.deleteMany({ where: { questionId: id } });
-//     await db.option.createMany({
-//       data: [
-//         { text: "Opcja 1", questionId: id },
-//         { text: "Opcja 2", questionId: id },
-//       ],
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 const checkForDuplicatesTexts = (data: QuestionOption[]) => {
   const groupedTexts: { [key: string]: string[] } = {};
