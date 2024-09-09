@@ -72,26 +72,30 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
             <FaPlus /> Pytanie
           </span>
         </div>
-        <Link href={`/survey/${actionsOnID}`} target="_blank">
-          <div className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer">
+        <Link
+          className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+          href={`/survey/${actionsOnID}`}
+          target="_blank"
+        >
+          <div>
             <span className="flex items-center">
               <FaRegEye /> Zobacz
             </span>
           </div>
         </Link>
-        <div className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer">
-          <span
-            onClick={() => {
-              navigator.clipboard.writeText(
-                `${window.location.origin}/survey/${actionsOnID}`
-              );
-              dispatch(setActionAlert("ℹ️ Skopiowano do schowka"));
-              setTimeout(() => {
-                dispatch(setActionAlert(""));
-              }, 4000);
-            }}
-            className="flex items-center"
-          >
+        <div
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${window.location.origin}/survey/${actionsOnID}`
+            );
+            dispatch(setActionAlert("ℹ️ Skopiowano do schowka"));
+            setTimeout(() => {
+              dispatch(setActionAlert(""));
+            }, 4000);
+          }}
+          className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+        >
+          <span className="flex items-center">
             <MdShare /> Udostępnij
           </span>
         </div>

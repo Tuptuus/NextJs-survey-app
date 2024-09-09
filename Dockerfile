@@ -2,13 +2,15 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY package.json .
+COPY package*.json .
 
-RUN yarn
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npx prisma generate
 
-CMD [ "yarn", "start" ]
+EXPOSE 3000
+
+CMD npm run dev
 

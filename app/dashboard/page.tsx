@@ -5,22 +5,16 @@ import CreateModalContextProvider from "../contexts/createSurveyModalContext";
 import { getSurveysByUserID } from "@/data/surveys";
 import { auth } from "@/auth";
 
-interface Survey {
-  id: string;
-  surveyToUserID: string | null;
-  title: string | null;
-  description: string | null;
-  createdAt: string | null;
-}
-
 const getData = async () => {
   const session = await auth();
+  console.log(session);
   const data = await getSurveysByUserID(session?.user?.id as string);
   return data;
 };
 
 const DashboardPage = async () => {
   const data = await getData();
+  const session = await auth();
   return (
     <>
       <CreateModalContextProvider>
@@ -30,7 +24,7 @@ const DashboardPage = async () => {
               Twoje ankiety
             </div>
             <div className="w-1/2 flex justify-end ">
-              <OpenModalButton />
+              <OpenModalButton user={session?.user} />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">

@@ -4,14 +4,15 @@ import { LuPlus } from "react-icons/lu";
 import { useCreateModalContext } from "../contexts/createSurveyModalContext";
 import CreateSurveyModal from "./CreateSurveyModal";
 
-const OpenModalButton = () => {
+const OpenModalButton = (props: any) => {
+  const { user } = props;
   const { showModal, setShowModal } = useCreateModalContext();
   const openCreateSurveyModal = () => {
     setShowModal(true);
   };
   return (
     <>
-      {showModal ? <CreateSurveyModal /> : null}
+      {showModal ? <CreateSurveyModal user={user} /> : null}
       <button
         className="border bg-orange-500 rounded-lg pr-1 pl-2 py-1 text-base font-bold hover:bg-orange-600 transition-all"
         onClick={openCreateSurveyModal}

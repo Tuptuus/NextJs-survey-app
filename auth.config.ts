@@ -12,20 +12,34 @@ export default {
     }),
     Credentials({
       async authorize(credentials) {
-        const data = credentials;
-        const { email, password, callback } = data;
-        if (data) {
-          const user = await getUserByEmail(email as string);
-          if (!user || !user.password) return null;
-          const passwordsMatch = await bcryptjs.compare(
-            password as string,
-            user.password
-          );
-          if (passwordsMatch) return user;
+        const { email, password } = credentials;
+
+        if (!email || !password) {
+          throw new Error("Nie podano emaila lub hasła");
         }
-        return null;
+
+        const user = await getUserByEmail(email as string);
+
+        if (!user || !user.password) {
+          throw new Error("Nieprawidłowy email lub hasło");
+        }
+
+        const passwordsMatch = await bcryptjs.compare(
+          password as string,
+          user.password
+        );
+
+        if (!passwordsMatch) {
+          throw new Error("Nieprawidłowy email lub hasło");
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        };
       },
     }),
   ],
-  secret: "test",
+  secret: process.env.AUTH_SECRET,
 } satisfies NextAuthConfig;

@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run open-web && next dev",
-    "postinstall": "prisma generate",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "open-web": "start http://localhost:3000"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.4.0",

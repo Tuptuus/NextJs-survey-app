@@ -45,11 +45,11 @@ const RegisterPage = () => {
 
   return (
     <div className="flex justify-center flex-col items-center h-screen text-white">
-      <div className=" bg-orange-500 w-96 h-10 flex items-center justify-center rounded-lg cursor-pointer hover:bg-orange-600 transition-all">
-        <span
-          onClick={() => loginGithub("github")}
-          className="flex items-center text-xl"
-        >
+      <div
+        onClick={() => loginGithub("github")}
+        className=" bg-orange-500 w-96 h-10 flex items-center justify-center rounded-lg cursor-pointer hover:bg-orange-600 transition-all"
+      >
+        <span className="flex items-center text-xl">
           Register with <FaGithub className="ml-2 text-2xl" />
         </span>
       </div>

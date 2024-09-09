@@ -1,19 +1,25 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useCreateModalContext } from "../contexts/createSurveyModalContext";
 import { useCurrentUser } from "@/hooks/currentUser";
 import { createSurvey } from "@/actions/createSurvey";
 
-const CreateSurveyModal = () => {
+const CreateSurveyModal = (props: any) => {
+  const { user } = props;
+  const hookUser = useCurrentUser();
   const [data, setData] = useState({
     title: "",
     description: "",
   });
   const [error, setError] = useState("");
-  const user = useCurrentUser();
   const { setShowModal } = useCreateModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log("hook user: ", hookUser);
+    console.log("props user: ", user);
+  });
 
   const closeSurveyModal = () => {
     const modal = modalRef.current;

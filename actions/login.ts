@@ -9,7 +9,9 @@ export const login = async (data: any) => {
       password,
       redirect: false,
     });
+    return "success";
   } catch (err) {
     console.log(err);
+    return "error";
   }
 };
