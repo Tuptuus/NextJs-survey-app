@@ -96,7 +96,7 @@ function SurveyAnswers() {
         display: false,
       },
     },
-    indexAxis: "x" as "x",
+    indexAxis: "y" as "y",
     scales: {
       x: {
         beginAtZero: true,
@@ -188,12 +188,12 @@ function SurveyAnswers() {
             </div>
           ) : null}
           {item.type === "SINGLECHOICE" ? (
-            <div className="relative h-[30vh]">
+            <div className="relative h-80">
               <Pie options={pieOptions} data={pieChartData} />
             </div>
           ) : null}
           {item.type === "MULTICHOICE" ? (
-            <div className="relative">
+            <div className="relative h-96 w-96">
               <Bar options={barOptions} data={barChartData} />
             </div>
           ) : null}

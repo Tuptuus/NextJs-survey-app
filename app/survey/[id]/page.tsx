@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getSurveyByID, saveAnswers } from "@/data/surveys";
 import {
   Button,
@@ -47,7 +47,10 @@ interface Answer {
 function SurveyAnswerPage() {
   const [currSurvey, setCurrSurvey] = useState<Survey | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [sendLoading, setSendLoading] = useState(false);
   const params = useParams();
+  const router = useRouter();
 
   useEffect(() => {
     const getSurvey = async () => {
@@ -103,17 +106,59 @@ function SurveyAnswerPage() {
     });
   };
 
+  const validateAnswers = () => {
+    const missingAnswers: string[] = [];
+    currSurvey?.questions.forEach((question) => {
+      const answer = answers.find((ans) => ans.questionId === question.id);
+      if (question.isRequired) {
+        if (
+          question.type === "SHORTTEXT" ||
+          question.type === "LONGTEXT" ||
+          question.type === "SINGLECHOICE"
+        ) {
+          if (!answer || !answer.answerText) {
+            missingAnswers.push(
+              `Brak odpowiedzi na pytanie: ${question.title}`
+            );
+          }
+        } else if (question.type === "MULTICHOICE") {
+          if (!answer || answer.answerOptions.length === 0) {
+            missingAnswers.push(
+              `Brak odpowiedzi na pytanie: ${question.title}`
+            );
+          }
+        }
+      }
+    });
+    setErrors(missingAnswers);
+    setTimeout(() => {
+      setErrors([]);
+    }, 5000);
+    return missingAnswers.length === 0;
+  };
+
   const handleSubmit = async () => {
-    saveAnswers(
-      currSurvey?.id as string,
-      currSurvey?.surveyToUserID as string,
-      answers
-    );
+    if (validateAnswers()) {
+      setSendLoading(true);
+      await saveAnswers(
+        currSurvey?.id as string,
+        currSurvey?.surveyToUserID as string,
+        answers
+      );
+      setSendLoading(false);
+    }
   };
 
   const questions = currSurvey?.questions.map((item) => (
-    <div className="mt-5 border rounded-lg p-5" key={item.id}>
-      <p className="text-lg">{item.title}</p>
+    <div
+      onClick={() => console.log(item)}
+      className="mt-5 border rounded-lg p-5"
+      key={item.id}
+    >
+      <p className="text-lg">
+        {item.title}
+        {item.isRequired ? <span className="text-red-500">*</span> : null}
+      </p>
 
       {item.type === "SHORTTEXT" ? (
         <Input
@@ -190,8 +235,18 @@ function SurveyAnswerPage() {
           </div>
           <div className="mt-5">
             <div>{questions}</div>
+            {errors.length > 0 && (
+              <div className="mt-5 text-red-500">
+                <p>Proszę odpowiedzieć na wymagane pytania:</p>
+                <ul>
+                  {errors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-          <div className="my-8 flex flex-col items-start">
+          <div className="my-8 flex flex-row items-start">
             <Button
               onClick={handleSubmit}
               className="bg-orange-500 text-white"
@@ -199,6 +254,9 @@ function SurveyAnswerPage() {
             >
               ZAPISZ ODPOWIEDZI
             </Button>
+            {sendLoading ? (
+              <Spinner className="ml-5" color="warning" size="lg" />
+            ) : null}
           </div>
         </div>
       </div>

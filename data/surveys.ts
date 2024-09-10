@@ -88,11 +88,11 @@ const checkForDuplicatesTexts = (data: QuestionOption[]) => {
       }
 
       if (textCounts[text] > 1) {
-        return `Błąd: Dla questionId '${questionId}' występuje powtarzający się tekst '${text}'.`;
+        return questionId;
       }
     }
   }
-  return "Nie znaleziono powtarzających się tekstów dla żadnego questionId.";
+  return false;
 };
 
 export const saveQuestionsChanges = async (
@@ -110,19 +110,24 @@ export const saveQuestionsChanges = async (
         answersArray.push(...answer);
       })
     );
-    const test = checkForDuplicatesTexts(options);
-    const deleteAll = questions.concat(deletedQuestions);
-    questions.forEach((obj: any) => {
-      delete obj.options;
-    });
-    const idsToDelete = deleteAll.map((item: any) => item.id);
-    await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
-    await db.question.createMany({ data: questions });
-    await db.option.createMany({ data: options });
-    if (answersArray.length != 0) {
-      await db.answer.createMany({ data: answersArray });
+    const duplicatedTexts = checkForDuplicatesTexts(options);
+    const getTitle = questions.find((item: any) => item.id === duplicatedTexts);
+    if (duplicatedTexts) {
+      return `Odpowiedzi w pytaniu ${getTitle.title} są takie same`;
+    } else {
+      const deleteAll = questions.concat(deletedQuestions);
+      questions.forEach((obj: any) => {
+        delete obj.options;
+      });
+      const idsToDelete = deleteAll.map((item: any) => item.id);
+      await db.question.deleteMany({ where: { id: { in: idsToDelete } } });
+      await db.question.createMany({ data: questions });
+      await db.option.createMany({ data: options });
+      if (answersArray.length != 0) {
+        await db.answer.createMany({ data: answersArray });
+      }
+      return "✅ Zapisano zmiany";
     }
-    return "✅ Zapisano zmiany";
   } catch (err) {
     console.log(err);
     return "Wystąpił nieznany błąd";

@@ -81,7 +81,7 @@ function SurveyPage() {
       <div className="text-white flex flex-col">
         {isVisible ? (
           <div
-            className={`absolute w-80 h-14 bg-gray-800 rounded-xl self-center flex items-center justify-center top-5 ${
+            className={`absolute max-w-[550px] p-2 bg-gray-800 rounded-xl self-center flex items-center justify-center top-5 ${
               isAnimating ? "slide-down" : "slide-up"
             }`}
           >

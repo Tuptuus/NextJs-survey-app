@@ -7,11 +7,14 @@ import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { useRouter } from "next/navigation";
 import { login } from "@/actions/login";
+import { Spinner } from "@nextui-org/react";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const router = useRouter();
 
   const handleInputsValue = (e: any, type: String) => {
@@ -24,13 +27,22 @@ const RegisterPage = () => {
     }
   };
 
-  const sendData = async () => {
+  const sendData = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
     const data = { name, email, pass };
     const loginData = { email, password: pass };
     const result = await register(data);
     if (result.success) {
       await login(loginData);
       router.push("/dashboard");
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 1500);
     }
     setName("");
     setEmail("");
@@ -54,20 +66,22 @@ const RegisterPage = () => {
         </span>
       </div>
       <p className="mt-2">OR</p>
-      <div className="flex flex-col">
+      <form action="" onSubmit={sendData} className="flex flex-col">
         <input
           className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96 "
           onChange={(e) => handleInputsValue(e, "name")}
           type="text"
           placeholder="Name"
           value={name}
+          required
         />
         <input
           className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96 "
           onChange={(e) => handleInputsValue(e, "email")}
-          type="text"
+          type="email"
           placeholder="Email"
           value={email}
+          required
         />
         <input
           className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96 "
@@ -75,12 +89,24 @@ const RegisterPage = () => {
           type="password"
           placeholder="Password"
           value={pass}
+          required
         />
+        <div className="flex justify-center">
+          {error ? (
+            <span className="text-red-500">
+              Wystąpił nieznany błąd, spróbuj ponownie
+            </span>
+          ) : null}
+        </div>
         <button
-          onClick={sendData}
+          // onClick={sendData}
+          type="submit"
           className="bg-orange-500 m-2  h-10 text-xl rounded-lg hover:bg-orange-600 transition-all"
         >
           Register
+          <span className="absolute ml-2">
+            {loading ? <Spinner color="white" size="md" /> : null}
+          </span>
         </button>
         <p className="flex justify-end">
           You have account?{" "}
@@ -88,7 +114,7 @@ const RegisterPage = () => {
             Login here
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 };

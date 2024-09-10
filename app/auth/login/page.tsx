@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { Spinner } from "@nextui-org/react";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -13,14 +14,22 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const submitLogin = async (e: any) => {
     e.preventDefault();
-    const test = await login(data);
-    if (test === "success") {
+    setLoading(true);
+    const isLogged = await login(data);
+    if (isLogged === "success") {
       router.push("/dashboard");
+      setLoading(false);
     } else {
-      console.log("unexpected error");
+      setLoading(false);
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 1500);
     }
   };
 
@@ -60,12 +69,21 @@ const LoginPage = () => {
               className="outline-none bg-transparent border-2 m-2 p-2 rounded-lg w-96"
               required
             />
+            <div className="flex justify-center">
+              {error ? (
+                <span className="text-red-500">
+                  Nieprawidłowy email lub hasło
+                </span>
+              ) : null}
+            </div>
             <button
-              // onClick={submitLogin}
               type="submit"
-              className="bg-orange-500 m-2  h-10 text-xl rounded-lg"
+              className="bg-orange-500 m-2 h-10 flex justify-center items-center text-xl rounded-lg"
             >
               LOGIN
+              <span className="absolute ml-28 mt-2">
+                {loading ? <Spinner color="white" size="md" /> : null}
+              </span>
             </button>
             <p className="flex flex-row items-end justify-end">
               You don&apos;t have account?{" "}
