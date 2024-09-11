@@ -89,22 +89,24 @@ function SurveyPage() {
           </div>
         ) : null}
 
-        <div className="flex">
+        <div className="flex flex-col">
           <div className="text-2xl flex items-center py-7">
             Ankieta: {currSurvey ? currSurvey.title : null}
           </div>
-          <div className="flex items-center ml-10 lg:hidden">
+          <div className="flex items-center ml-10 lg:hidden justify-end mb-2">
             <div
               onClick={() => changeDisplayPage("questions")}
-              className={`cursor-pointer p-3 rounded-xl ${
-                currMode == "questions" ? "bg-orange-500" : ""
+              className={`cursor-pointer hover:bg-orange-400 p-3 rounded-xl ${
+                currMode == "questions"
+                  ? "bg-orange-500 hover:bg-orange-500"
+                  : ""
               } transition-all`}
             >
               Pytania
             </div>
             <div
               onClick={() => changeDisplayPage("answers")}
-              className={`cursor-pointer p-3 rounded-xl ml-3 ${
+              className={`cursor-pointer hover:bg-orange-400 p-3 rounded-xl ml-3 ${
                 currMode == "answers" ? "bg-orange-500" : ""
               } transition-all`}
             >

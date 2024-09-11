@@ -195,7 +195,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
         </div>
         <div
           onClick={() => setShowModal(true)}
-          className="lg:ml-5 sm:mx-3 ml-1 py-3 px-2 lg:px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+          className="lg:ml-5 sm:ml-3 ml-1 py-3 px-2 lg:px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">
             <FaRegTrashAlt /> Usuń
