@@ -12,7 +12,6 @@ import { MdShare } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { addQuestions, setActionAlert } from "@/redux/features/questionsSlice";
 import { saveQuestionsChanges } from "@/data/surveys";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDeleteModalContext } from "@/app/contexts/deleteSurveyModalContext";
 import DeleteSurveyModal from "../DeleteSurveyModal";
@@ -23,6 +22,7 @@ interface surveyID {
 
 const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
   const { showModal, setShowModal } = useDeleteModalContext();
+  // const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const questions = useAppSelector((state) => state.questionsReducer.questions);
   const options = useAppSelector(
     (state) => state.questionsReducer.questionOptions
@@ -58,22 +58,108 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
       dispatch(setActionAlert(""));
     }, 4000);
   };
+
+  // useEffect(() => {
+  //   const onResize = () => {
+  //     if (window.innerWidth > 767) {
+  //       setIsHamburgerOpen(false);
+  //     }
+  //   };
+  //   window.addEventListener("resize", onResize);
+  // }, []);
+
+  // const handleHamburger = () => {
+  //   setIsHamburgerOpen(!isHamburgerOpen);
+  // };
   return (
     <>
       {showModal ? (
         <DeleteSurveyModal actionsOnID={actionsOnID as string} />
       ) : null}
+      {/* <div className="md:hidden flex justify-end py-3">
+        <div
+          onClick={handleHamburger}
+          className={`flex flex-col cursor-pointer w-fit ${
+            isHamburgerOpen ? "active" : ""
+          }`}
+        >
+          <span
+            className={`w-8 h-1 bg-white rounded-2xl transition-all line1 my-1`}
+          ></span>
+          <span
+            className={`w-8 h-1 bg-white rounded-2xl transition-all line2 my-1`}
+          ></span>
+        </div>
+      </div> */}
+      {/* <div
+        className={`bg-slate-800 w-52 ${
+          isHamburgerOpen ? "flex" : "hidden"
+        } flex-col items-center absolute z-50 right-0 mr-2 rounded-lg border`}
+      >
+        <div
+          onClick={() => addQuestionFunction()}
+          className="hover:bg-orange-400 transition-all cursor-pointer border w-36 my-2 p-2 rounded-lg"
+        >
+          <span className="flex items-center justify-center">
+            <FaPlus /> Pytanie
+          </span>
+        </div>
+        <Link
+          href={`/survey/${actionsOnID}`}
+          target="_blank"
+          className="hover:bg-orange-400 transition-all cursor-pointer border w-36 my-2 p-2 rounded-lg"
+        >
+          <span className="flex items-center justify-center">
+            <FaRegEye /> Zobacz
+          </span>
+        </Link>
+        <div
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${window.location.origin}/survey/${actionsOnID}`
+            );
+            dispatch(setActionAlert("ℹ️ Skopiowano do schowka"));
+            setTimeout(() => {
+              dispatch(setActionAlert(""));
+            }, 4000);
+          }}
+          className="hover:bg-orange-400 transition-all cursor-pointer border w-36 my-2 p-2 rounded-lg"
+        >
+          <span className="flex items-center justify-center">
+            <MdShare /> Udostępnij
+          </span>
+        </div>
+        <div
+          onClick={() => saveChanges()}
+          className="hover:bg-orange-400 transition-all cursor-pointer border w-36 my-2 p-2 rounded-lg"
+        >
+          <span className="flex items-center justify-center">
+            <FaRegCheckCircle /> Zapisz
+          </span>
+        </div>
+        <div
+          onClick={() => {
+            setIsHamburgerOpen(false);
+            setShowModal(true);
+          }}
+          className="hover:bg-orange-400 transition-all cursor-pointer border w-36 my-2 p-2 rounded-lg"
+        >
+          <span className="flex items-center justify-center">
+            <FaRegTrashAlt /> Usuń
+          </span>
+        </div>
+      </div> */}
       <div className="flex justify-end">
         <div
           onClick={() => addQuestionFunction()}
-          className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+          className="lg:mx-5 sm:mx-3 mx-1 py-3 px-2 lg:px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">
             <FaPlus /> Pytanie
           </span>
         </div>
         <Link
-          className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+          className="lg:mx-5 sm:mx-3 mx-1 py-3 px-2 lg:px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
           href={`/survey/${actionsOnID}`}
           target="_blank"
         >
@@ -93,7 +179,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
               dispatch(setActionAlert(""));
             }, 4000);
           }}
-          className="mx-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+          className="lg:mx-5 sm:mx-3 mx-1 py-3 px-2 lg:px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">
             <MdShare /> Udostępnij
@@ -101,7 +187,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
         </div>
         <div
           onClick={() => saveChanges()}
-          className="ml-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+          className="lg:mx-5 sm:mx-3 mx-1 py-3 px-2 lg:px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">
             <FaRegCheckCircle /> Zapisz
@@ -109,7 +195,7 @@ const SurveyActions: React.FC<surveyID> = ({ actionsOnID }) => {
         </div>
         <div
           onClick={() => setShowModal(true)}
-          className="ml-5 py-3 px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
+          className="lg:ml-5 sm:mx-3 ml-1 py-3 px-2 lg:px-5 hover:bg-orange-400 transition-all rounded-2xl cursor-pointer"
         >
           <span className="flex items-center">
             <FaRegTrashAlt /> Usuń

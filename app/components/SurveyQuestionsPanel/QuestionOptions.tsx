@@ -5,7 +5,6 @@ import {
   addOptionAction,
 } from "@/redux/features/questionsSlice";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useAppSelector } from "@/redux/store";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import short from "short-uuid";

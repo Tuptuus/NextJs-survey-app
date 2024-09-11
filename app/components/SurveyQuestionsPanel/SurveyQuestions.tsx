@@ -38,7 +38,7 @@ const SurveyQuestions: React.FC<Survey> = (item) => {
   return (
     <div>
       <SurveyActions actionsOnID={item.id as string} />
-      <div className="flex flex-col">
+      <div className="">
         {questions.map((question: any) => (
           <QuestionBlock
             key={question.id}

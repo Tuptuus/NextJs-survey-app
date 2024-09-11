@@ -7,7 +7,6 @@ import { auth } from "@/auth";
 
 const getData = async () => {
   const session = await auth();
-  console.log(session);
   const data = await getSurveysByUserID(session?.user?.id as string);
   return data;
 };
@@ -18,7 +17,7 @@ const DashboardPage = async () => {
   return (
     <>
       <CreateModalContextProvider>
-        <div className="text-white">
+        <div className="text-white pb-10">
           <div className="flex py-7">
             <div className="text-2xl w-1/2  flex items-center">
               Twoje ankiety

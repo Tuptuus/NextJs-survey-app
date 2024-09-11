@@ -89,17 +89,35 @@ function SurveyPage() {
           </div>
         ) : null}
 
-        <div>
-          <div className="text-2xl w-1/2  flex items-center py-7">
+        <div className="flex">
+          <div className="text-2xl flex items-center py-7">
             Ankieta: {currSurvey ? currSurvey.title : null}
+          </div>
+          <div className="flex items-center ml-10 lg:hidden">
+            <div
+              onClick={() => changeDisplayPage("questions")}
+              className={`cursor-pointer p-3 rounded-xl ${
+                currMode == "questions" ? "bg-orange-500" : ""
+              } transition-all`}
+            >
+              Pytania
+            </div>
+            <div
+              onClick={() => changeDisplayPage("answers")}
+              className={`cursor-pointer p-3 rounded-xl ml-3 ${
+                currMode == "answers" ? "bg-orange-500" : ""
+              } transition-all`}
+            >
+              Odpowiedzi
+            </div>
           </div>
         </div>
         <div className="flex">
-          <div className="text-white w-1/5">
+          <div className="text-white w-1/5 hidden lg:block">
             <div className="">
               <div
                 onClick={() => changeDisplayPage("questions")}
-                className={`cursor-pointer py-3 rounded-xl pl-3 w-52 ${
+                className={`cursor-pointer py-3 rounded-xl pl-3 w-48 ${
                   currMode == "questions" ? "bg-orange-500" : ""
                 } transition-all`}
               >
@@ -107,7 +125,7 @@ function SurveyPage() {
               </div>
               <div
                 onClick={() => changeDisplayPage("answers")}
-                className={`cursor-pointer py-3 rounded-xl pl-3 w-52 mt-3 ${
+                className={`cursor-pointer py-3 rounded-xl pl-3 w-48 mt-3 ${
                   currMode == "answers" ? "bg-orange-500" : ""
                 } transition-all`}
               >
@@ -115,7 +133,7 @@ function SurveyPage() {
               </div>
             </div>
           </div>
-          <div className="w-4/5">
+          <div className="w-full">
             {currMode == "questions" ? (
               currSurvey && <SurveyQuestions {...currSurvey} />
             ) : (

@@ -23,7 +23,7 @@ const SurveyBlock: React.FC<SurveyBlockProps> = ({
   return (
     <>
       <div key={key} className="border p-5 rounded-xl">
-        <div className="text-xl">{title}</div>
+        <div className="text-xl h-16">{title}</div>
         <div className="h-32 overflow-y-scroll customScrollbar">
           <p className="break-words pr-2">{desc}</p>
         </div>

@@ -10,7 +10,6 @@ export const register = async (data: any) => {
   const exisitingUser = await getUserByEmail(email);
 
   if (exisitingUser) {
-    console.log("email in use");
     return { success: false, message: "email in use" };
   } else {
     await db.user.create({

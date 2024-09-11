@@ -34,6 +34,13 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+.active .line1 {
+  transform: translateY(6px) rotate(45deg);
+}
+.active .line2 {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
 @keyframes slideDown {
   0% {
     transform: translateY(-150%);

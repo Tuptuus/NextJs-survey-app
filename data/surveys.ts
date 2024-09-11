@@ -50,8 +50,8 @@ export const getResponses = async (id: string) => {
   try {
     const responses = await db.response.findMany({ where: { surveyId: id } });
     return responses;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     return null;
   }
 };
@@ -154,8 +154,8 @@ export const saveAnswers = async (
         },
       },
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
   redirect(`/survey/${surveyID}/surveyResponse`);
 };

@@ -1,13 +1,11 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useCreateModalContext } from "../contexts/createSurveyModalContext";
-import { useCurrentUser } from "@/hooks/currentUser";
 import { createSurvey } from "@/actions/createSurvey";
 
 const CreateSurveyModal = (props: any) => {
   const { user } = props;
-  const hookUser = useCurrentUser();
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -15,11 +13,6 @@ const CreateSurveyModal = (props: any) => {
   const [error, setError] = useState("");
   const { setShowModal } = useCreateModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    console.log("hook user: ", hookUser);
-    console.log("props user: ", user);
-  });
 
   const closeSurveyModal = () => {
     const modal = modalRef.current;
@@ -78,6 +71,7 @@ const CreateSurveyModal = (props: any) => {
             onChange={(e) => setData({ ...data, title: e.target.value })}
             placeholder="Tytuł ankiety"
             className="bg-transparent border border-white rounded-md p-4 mt-6"
+            maxLength={70}
           />
           <input
             type="text"

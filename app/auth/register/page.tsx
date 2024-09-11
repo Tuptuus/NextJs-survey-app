@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleInputsValue = (e: any, type: String) => {
@@ -33,20 +33,27 @@ const RegisterPage = () => {
     const data = { name, email, pass };
     const loginData = { email, password: pass };
     const result = await register(data);
+    console.log(result);
     if (result.success) {
       await login(loginData);
       router.push("/dashboard");
       setLoading(false);
+      setName("");
+      setEmail("");
+      setPass("");
+    } else if (result.message == "email in use") {
+      setLoading(false);
+      setError("Ten email jest już w użyciu");
+      setTimeout(() => {
+        setError("");
+      }, 2000);
     } else {
       setLoading(false);
-      setError(true);
+      setError("Wystąpił nieznany błąd, spróbuj ponownie");
       setTimeout(() => {
-        setError(false);
-      }, 1500);
+        setError("");
+      }, 2000);
     }
-    setName("");
-    setEmail("");
-    setPass("");
   };
 
   const loginGithub = (provider: any) => {
@@ -89,17 +96,13 @@ const RegisterPage = () => {
           type="password"
           placeholder="Password"
           value={pass}
+          minLength={6}
           required
         />
         <div className="flex justify-center">
-          {error ? (
-            <span className="text-red-500">
-              Wystąpił nieznany błąd, spróbuj ponownie
-            </span>
-          ) : null}
+          {error ? <span className="text-red-500">{error}</span> : null}
         </div>
         <button
-          // onClick={sendData}
           type="submit"
           className="bg-orange-500 m-2  h-10 text-xl rounded-lg hover:bg-orange-600 transition-all"
         >

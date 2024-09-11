@@ -140,7 +140,25 @@ const QuestionBlock: React.FC<question> = (props) => {
               </div>
             </div>
           </div>
-          <div className="w-1/3 flex justify-end items-center text-lg">
+          <div className="w-1/3 flex justify-end items-center sm:hidden text-lg">
+            <div
+              onClick={() => dispatch(deleteQuestion(id))}
+              className="absolute mt-20 right-0 mx-5 cursor-pointer p-3 rounded-xl hover:bg-orange-500 transition-all"
+            >
+              <FaRegTrashAlt className="text-2xl" />
+            </div>
+            <div className="">
+              <Switch
+                isSelected={switchIsRequired}
+                onValueChange={setSwitchIsRequired}
+                color="warning"
+                classNames={{ wrapper: cn("bg-gray-500") }}
+              >
+                <span className="text-white">Wymagane</span>
+              </Switch>
+            </div>
+          </div>
+          <div className="w-1/3 sm:flex justify-end items-center text-lg hidden">
             <div
               onClick={() => dispatch(deleteQuestion(id))}
               className="mx-5 cursor-pointer p-3 rounded-xl hover:bg-orange-500 transition-all"
