@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<!-- ABOUT THE PROJECT -->
+## About The Project
+A simple application for creating, managing, and sharing surveys. Users can easily generate questions, collect responses, and analyze results in a clear format. An ideal tool for quick research and gathering opinions.
 
-## Getting Started
 
-First, run the development server:
+### Built With
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Auth.js](https://img.shields.io/badge/Auth.js-4A5568?style=for-the-badge&logo=auth0&logoColor=white)](https://authjs.dev/)
+[![Redux](https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux.js.org/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repo
+   ```sh
+   git clone [https://github.com/github_username/repo_name.git](https://github.com/Tuptuus/NextJs-survey-app.git)
+   ```
+2. Install NPM packages
+   ```sh
+   npm install or yarn
+   ```
+3. Enter your API in `.env`
+   ```js
+   DATABASE_URL = 'mongodb database link';
+   AUTH_JWT_SECRET=xxxxx
+   AUTH_SECRET=xxxxx
+   GITHUB_CLIENT_ID=xxxxx
+   GITHUB_CLIENT_SECRET=xxxxx
+   AUTH_TRUST_HOST=TRUE
+   ```
+4. Run project
+   ```sh
+   npm run dev or yarn dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Test live
+https://next-js-survey-app.vercel.app/
