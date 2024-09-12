@@ -17,7 +17,7 @@ A simple application for creating, managing, and sharing surveys. Users can easi
 
 1. Clone the repo
    ```sh
-   git clone [https://github.com/github_username/repo_name.git](https://github.com/Tuptuus/NextJs-survey-app.git)
+   git clone https://github.com/Tuptuus/NextJs-survey-app.git
    ```
 2. Install NPM packages
    ```sh
